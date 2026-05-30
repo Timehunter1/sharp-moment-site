@@ -1,209 +1,146 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="SHARP MOMENT v9.0 - From Artificial General Intelligence to Super Autonomous Intelligence: A comprehensive technical architecture and investment research report by Arthur Lee.">
-  <meta name="author" content="Arthur Lee">
-  <title>SHARP MOMENT v9.0 | From AGI to Super Autonomous Intelligence</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SHARP MOMENT v9.0 — From AGI to SAI</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Georgia&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
+<style>
+  :root {
+    --bg: #fdfcfa;
+    --text: #1a1a1a;
+    --text2: #4a4a4a;
+    --text3: #8a8a8a;
+    --border: #e5e2dd;
+    --border2: #f0ede8;
+    --accent: #c9a050;
+    --nav-bg: rgba(253,252,250,0.96);
+  }
+  [data-theme="dark"] { --bg: #1a1a1a; --text: #e0e0e0; --text2: #aaa; --text3: #777; --border: #333; --border2: #2a2a2a; --nav-bg: rgba(26,26,26,0.96); }
+  [data-theme="sepia"] { --bg: #f4ecd8; --text: #433422; --text2: #5a4a3a; --text3: #8a7a6a; --border: #d8cfc0; --border2: #e8dfc8; --nav-bg: rgba(244,236,216,0.96); }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text); font-family: Georgia, 'Times New Roman', serif; font-size: 17px; line-height: 1.7; transition: background 0.3s, color 0.3s; }
+  h1, h2, h3, h4, h5, h6 { font-family: Inter, system-ui, sans-serif; line-height: 1.3; }
+  a { color: inherit; text-decoration: none; }
+  /* ===== SIDEBAR ===== */
+  #sidebar { position: fixed; top: 0; left: 0; width: 280px; height: 100vh; background: var(--nav-bg); border-right: 1px solid var(--border); backdrop-filter: blur(8px); z-index: 40; display: flex; flex-direction: column; transition: transform 0.3s; }
+  #sidebar.collapsed { transform: translateX(-280px); }
+  .sidebar-header { padding: 16px 20px; border-bottom: 1px solid var(--border); flex-shrink: 0; }
+  .sidebar-header h1 { font-size: 15px; font-weight: 700; margin: 0; color: var(--text); }
+  .sidebar-header p { font-size: 11px; color: var(--text3); margin: 2px 0 0; }
+  .sidebar-scroll { flex: 1; overflow-y: auto; padding: 8px 0; }
+  .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+  .sidebar-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  .part-label { font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: var(--accent); padding: 8px 20px 4px; }
+  .nav-item { display: flex; align-items: flex-start; gap: 8px; padding: 6px 20px; font-size: 13px; line-height: 1.4; color: var(--text2); cursor: pointer; transition: all 0.15s; border-left: 2px solid transparent; }
+  .nav-item:hover { background: var(--border2); color: var(--text); }
+  .nav-item.active { color: var(--text); border-left-color: var(--accent); background: var(--border2); }
+  .nav-num { font-family: monospace; font-size: 11px; color: var(--text3); flex-shrink: 0; min-width: 20px; }
+  .nav-title { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  /* ===== MAIN ===== */
+  #main-wrap { margin-left: 280px; min-height: 100vh; display: flex; flex-direction: column; transition: margin-left 0.3s; }
+  #main-wrap.expanded { margin-left: 0; }
+  /* ===== TOP BAR ===== */
+  #topbar { position: sticky; top: 0; z-index: 30; background: var(--nav-bg); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border); padding: 0 24px; height: 48px; display: flex; align-items: center; justify-content: space-between; }
+  .topbar-left { display: flex; align-items: center; gap: 12px; }
+  #toggle-sidebar { font-size: 20px; background: none; border: none; color: var(--text2); cursor: pointer; padding: 4px; }
+  .topbar-title { font-family: Inter, sans-serif; font-size: 13px; font-weight: 600; color: var(--text); }
+  .topbar-chapter { font-size: 12px; color: var(--text3); }
+  /* ===== CONTENT ===== */
+  .content-wrap { max-width: 720px; margin: 0 auto; padding: 40px 24px 100px; width: 100%; }
+  .chapter { display: none; }
+  .chapter.active { display: block; }
+  .chapter h1 { font-size: 28px; font-weight: 700; margin: 0 0 24px; padding-bottom: 16px; border-bottom: 2px solid var(--accent); }
+  .chapter h2 { font-size: 20px; font-weight: 600; margin: 32px 0 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .chapter h3 { font-size: 17px; font-weight: 600; margin: 24px 0 12px; }
+  .chapter h4 { font-size: 15px; font-weight: 600; margin: 20px 0 10px; }
+  .chapter p { margin: 0 0 14px; }
+  .chapter blockquote { margin: 16px 0; padding: 12px 16px; border-left: 3px solid var(--border); color: var(--text2); font-style: italic; background: var(--border2); border-radius: 0 8px 8px 0; }
+  .chapter table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; font-family: Inter, sans-serif; }
+  .chapter th, .chapter td { border: 1px solid var(--border); padding: 8px 12px; text-align: left; }
+  .chapter th { background: var(--border2); font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.03em; }
+  .chapter tr:nth-child(even) { background: rgba(0,0,0,0.015); }
+  .chapter sup { font-size: 11px; }
+  .chapter .footnotes { font-size: 14px; color: var(--text2); border-top: 1px solid var(--border); margin-top: 40px; padding-top: 20px; }
+  .chapter .footnotes ol { padding-left: 20px; }
+  .chapter .footnotes li { margin-bottom: 8px; }
+  .chapter .header-section-number { color: var(--accent); margin-right: 8px; }
+  /* ===== BOTTOM BAR ===== */
+  #bottombar { position: fixed; bottom: 0; left: 280px; right: 0; background: var(--nav-bg); backdrop-filter: blur(8px); border-top: 1px solid var(--border); z-index: 30; padding: 0 24px; height: 52px; display: flex; align-items: center; justify-content: center; gap: 20px; transition: left 0.3s; }
+  #bottombar.expanded { left: 0; }
+  .page-btn { font-family: Inter, sans-serif; font-size: 13px; font-weight: 500; padding: 6px 16px; border: 1px solid var(--border); background: transparent; color: var(--text2); border-radius: 6px; cursor: pointer; transition: all 0.15s; display: flex; align-items: center; gap: 6px; }
+  .page-btn:hover:not(:disabled) { background: var(--border2); color: var(--text); }
+  .page-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .progress-bar { flex: 1; max-width: 300px; height: 4px; background: var(--border); border-radius: 2px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--accent); border-radius: 2px; transition: width 0.3s; }
+  .progress-text { font-family: Inter, sans-serif; font-size: 11px; color: var(--text3); min-width: 50px; text-align: center; }
+  /* ===== FLOATING CONTROLS ===== */
+  #float-controls { position: fixed; bottom: 72px; right: 24px; z-index: 35; display: flex; flex-direction: column; gap: 8px; }
+  .float-btn { width: 40px; height: 40px; border-radius: 50%; background: var(--nav-bg); border: 1px solid var(--border); color: var(--text2); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 16px; transition: all 0.15s; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  .float-btn:hover { background: var(--border2); color: var(--text); }
+  /* ===== READING MODE MODAL ===== */
+  #read-modal { position: fixed; bottom: 120px; right: 24px; z-index: 36; background: var(--nav-bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; width: 220px; box-shadow: 0 8px 32px rgba(0,0,0,0.12); display: none; }
+  #read-modal.show { display: block; }
+  .rm-label { font-family: Inter, sans-serif; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text3); margin-bottom: 6px; }
+  .rm-row { margin-bottom: 12px; }
+  .rm-row:last-child { margin-bottom: 0; }
+  .rm-btns { display: flex; gap: 4px; }
+  .rm-btn { flex: 1; font-size: 11px; padding: 4px 0; border: 1px solid var(--border); background: transparent; color: var(--text2); border-radius: 4px; cursor: pointer; }
+  .rm-btn:hover, .rm-btn.active { background: var(--border2); color: var(--text); }
+  /* ===== MOBILE ===== */
+  @media (max-width: 768px) {
+    #sidebar { width: 260px; transform: translateX(-260px); z-index: 50; box-shadow: 2px 0 16px rgba(0,0,0,0.15); }
+    #sidebar.collapsed { transform: translateX(-260px); }
+    #sidebar.open { transform: translateX(0) !important; }
+    #main-wrap { margin-left: 0 !important; }
+    #bottombar { left: 0 !important; }
+    .content-wrap { padding: 20px 16px 80px; }
+    .chapter h1 { font-size: 22px; }
+    .chapter h2 { font-size: 17px; }
+    .chapter table { font-size: 12px; }
+    .chapter th, .chapter td { padding: 6px 8px; }
+    #overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 45; }
+    #overlay.show { display: block; }
+    #float-controls { bottom: 62px; right: 12px; }
+  }
+  @media (min-width: 769px) {
+    #overlay { display: none !important; }
+    #sidebar { transform: translateX(0) !important; }
+  }
+</style>
 </head>
-<body>
+<body data-theme="light">
 
-  <!-- ==================== FIXED NAVIGATION ==================== -->
-  <nav id="main-nav" class="fixed top-0 left-0 right-0 z-50 border-b border-[#e5e2dd] transition-all duration-300">
-    <div class="max-w-[1200px] mx-auto px-4 sm:px-6">
-      <div class="flex items-center justify-between h-14">
-        <!-- Left: Logo -->
-        <a href="#top" class="flex items-center gap-2 no-underline group">
-          <span class="font-sans font-semibold text-[15px] tracking-tight text-[#1a1a1a] group-hover:opacity-60 transition-opacity">SHARP MOMENT</span>
-          <span class="text-[11px] text-[#8a8a8a] font-normal hidden sm:inline">v9.0</span>
-        </a>
+<!-- Overlay for mobile sidebar -->
+<div id="overlay" onclick="toggleSidebar()"></div>
 
-        <!-- Center: Chapter Links (Desktop) -->
-        <div class="hidden lg:flex items-center gap-1">
-          <div class="relative group/nav">
-            <button class="flex items-center gap-1 px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] rounded-md hover:bg-[#f5f3f0] transition-colors cursor-pointer">
-              <span>Chapters</span>
-              <svg class="w-3.5 h-3.5 opacity-50" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-            </button>
-            <div class="absolute top-full left-1/2 -translate-x-1/2 mt-1 w-56 bg-[#fdfcfa] border border-[#e5e2dd] rounded-lg shadow-lg opacity-0 invisible group-hover/nav:opacity-100 group-hover/nav:visible transition-all duration-200 max-h-[70vh] overflow-y-auto py-2 px-1">
-              <a href="#abstract" class="nav-link block px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors">Abstract</a>
-              <div class="border-t border-[#e5e2dd] my-1"></div>
-              <a href="#the-agi-countdown-and-humanitys-crossroads" class="nav-link block px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-1.5 font-mono text-xs">01</span>AGI Countdown</a>
-              <a href="#entropy-energy-efficiency" class="nav-link block px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-1.5 font-mono text-xs">02</span>Entropy</a>
-              <a href="#the-sharp-five-dimensional-framework-moment-six-matrices-sai-ultimate-goal" class="nav-link block px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-1.5 font-mono text-xs">03</span>Framework</a>
-              <a href="#s-space-the-frontier-of-spatial-computing" class="nav-link block px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-1.5 font-mono text-xs">04</span>S-SPACE</a>
-              <a href="#a-agent-the-agent-technology-stack" class="nav-link block px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-1.5 font-mono text-xs">05</span>A-AGENT</a>
-              <a href="#r-robot-embodied-intelligence-technology" class="nav-link block px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-1.5 font-mono text-xs">06</span>R-ROBOT</a>
-              <a href="#p-power-energy-technology-panorama" class="nav-link block px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-1.5 font-mono text-xs">07</span>P-POWER</a>
-              <a href="#mixed-space-mixed-space-technology-stack" class="nav-link block px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-1.5 font-mono text-xs">08</span>Mixed Space</a>
-              <a href="#original-space-remote-physical-space-exploration" class="nav-link block px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-1.5 font-mono text-xs">09</span>Original Space</a>
-              <a href="#model-token-the-technical-encoding-of-memory" class="nav-link block px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-1.5 font-mono text-xs">10</span>Model Token</a>
-              <a href="#exchange-token-the-protocol-grammar-of-memory-exchange" class="nav-link block px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-1.5 font-mono text-xs">11</span>Exchange Token</a>
-              <a href="#nuclear-power-computing-centralized-energy-for-cognition" class="nav-link block px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-1.5 font-mono text-xs">12</span>Nuclear Power Computing</a>
-              <a href="#thin-film-solar-computing-distributed-energy-for-cognition" class="nav-link block px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-1.5 font-mono text-xs">13</span>Thin-Film Solar Power Computing</a>
-              <a href="#chapter-15-safer-distributed-memory-system" class="nav-link block px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-1.5 font-mono text-xs">15</span>SAFER</a>
-              <a href="#chapter-16-magic-the-distributed-perception-system" class="nav-link block px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-1.5 font-mono text-xs">16</span>MAGIC</a>
-              <a href="#chapter-17-turbo-the-distributed-cognitive-energy-system" class="nav-link block px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-1.5 font-mono text-xs">17</span>TURBO</a>
-            </div>
-          </div>
-          <a href="#appendix-a-core-glossary" class="nav-link px-3 py-1.5 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] rounded-md hover:bg-[#f5f3f0] transition-colors">Appendices</a>
-        </div>
+<!-- ===== SIDEBAR ===== -->
+<nav id="sidebar">
+  <div class="sidebar-header">
+    <h1>SHARP MOMENT</h1>
+    <p>v9.0 SA-Enhanced Edition</p>
+  </div>
+  <div class="sidebar-scroll" id="sidebar-nav"></div>
+</nav>
 
-        <!-- Right: PDF + Mobile Menu -->
-        <div class="flex items-center gap-2">
-          <a href="/SHARP_MOMENT_v9.0.pdf" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-[#1a1a1a] bg-[#f5f3f0] hover:bg-[#e5e2dd] rounded-md transition-colors no-underline">
-            <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
-            Full Report PDF
-          </a>
-          <button id="mobile-menu-btn" class="lg:hidden p-2 text-[#4a4a4a] hover:text-[#1a1a1a] rounded-md hover:bg-[#f5f3f0] transition-colors" aria-label="Toggle menu">
-            <svg id="menu-icon-open" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
-            <svg id="menu-icon-close" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
-          </button>
-        </div>
-      </div>
+<!-- ===== MAIN ===== -->
+<div id="main-wrap">
+
+  <!-- Top Bar -->
+  <header id="topbar">
+    <div class="topbar-left">
+      <button id="toggle-sidebar" onclick="toggleSidebar()" aria-label="Toggle sidebar">☰</button>
+      <span class="topbar-title" id="topbar-title">SHARP MOMENT</span>
     </div>
-
-    <!-- Mobile Menu Panel -->
-    <div id="mobile-menu" class="lg:hidden hidden border-t border-[#e5e2dd] max-h-[75vh] overflow-y-auto" style="background:rgba(253,252,250,0.98);">
-      <div class="px-4 py-3 space-y-1">
-        <a href="#abstract" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors">Abstract</a>
-        <div class="px-3 py-1.5 text-[11px] font-medium text-[#8a8a8a] uppercase tracking-wider">Chapters</div>
-        <a href="#the-agi-countdown-and-humanitys-crossroads" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-2 font-mono text-xs">01</span>AGI Countdown</a>
-        <a href="#entropy-energy-efficiency" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-2 font-mono text-xs">02</span>Entropy</a>
-        <a href="#the-sharp-five-dimensional-framework-moment-six-matrices-sai-ultimate-goal" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-2 font-mono text-xs">03</span>Framework</a>
-        <a href="#s-space-the-frontier-of-spatial-computing" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-2 font-mono text-xs">04</span>S-SPACE</a>
-        <a href="#a-agent-the-agent-technology-stack" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-2 font-mono text-xs">05</span>A-AGENT</a>
-        <a href="#r-robot-embodied-intelligence-technology" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-2 font-mono text-xs">06</span>R-ROBOT</a>
-        <a href="#p-power-energy-technology-panorama" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-2 font-mono text-xs">07</span>P-POWER</a>
-        <a href="#mixed-space-mixed-space-technology-stack" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-2 font-mono text-xs">08</span>Mixed Space</a>
-        <a href="#original-space-remote-physical-space-exploration" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-2 font-mono text-xs">09</span>Original Space</a>
-        <a href="#model-token-the-technical-encoding-of-memory" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-2 font-mono text-xs">10</span>Model Token</a>
-        <a href="#exchange-token-the-protocol-grammar-of-memory-exchange" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-2 font-mono text-xs">11</span>Exchange Token</a>
-        <a href="#nuclear-power-computing-centralized-energy-for-cognition" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-2 font-mono text-xs">12</span>Nuclear Power Computing</a>
-        <a href="#thin-film-solar-computing-distributed-energy-for-cognition" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-2 font-mono text-xs">13</span>Thin-Film Solar Power Computing</a>
-        <a href="#chapter-15-safer-distributed-memory-system" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-2 font-mono text-xs">15</span>SAFER</a>
-        <a href="#chapter-16-magic-the-distributed-perception-system" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-2 font-mono text-xs">16</span>MAGIC</a>
-        <a href="#chapter-17-turbo-the-distributed-cognitive-energy-system" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors"><span class="text-[#8a8a8a] mr-2 font-mono text-xs">17</span>TURBO</a>
-        <div class="border-t border-[#e5e2dd] my-1"></div>
-        <a href="#appendix-a-core-glossary" class="mobile-nav-link block px-3 py-2 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] hover:bg-[#f5f3f0] rounded-md transition-colors">Appendices</a>
-        <a href="/SHARP_MOMENT_v9.0.pdf" class="sm:hidden block px-3 py-2 text-sm font-medium text-[#1a1a1a] bg-[#f5f3f0] rounded-md no-underline mt-2 text-center">
-          Download Full Report PDF
-        </a>
-      </div>
-    </div>
-  </nav>
-
-  <!-- ==================== HERO / COVER SECTION ==================== -->
-  <header id="top" class="pt-28 pb-12 sm:pt-36 sm:pb-20">
-    <div class="max-w-[720px] mx-auto px-6">
-      <p class="text-sm font-sans font-medium text-[#8a8a8a] tracking-wide uppercase mb-4">Research Report &middot; June 2026</p>
-      <h1 class="font-sans text-[clamp(3rem,8vw,5rem)] font-bold leading-[1.05] tracking-tight text-[#1a1a1a] mb-6">
-        SHARP<br>MOMENT
-      </h1>
-      <p class="text-xl sm:text-2xl text-[#4a4a4a] leading-relaxed font-serif italic mb-3 max-w-[600px]">
-        From Artificial General Intelligence to Super Autonomous Intelligence
-      </p>
-      <p class="text-base text-[#8a8a8a]">Arthur Lee</p>
-
-      <div class="mt-10 pt-8 border-t border-[#e5e2dd]">
-        <p class="text-[17px] leading-[1.7] text-[#1a1a1a]">
-          This report presents a comprehensive technical architecture and investment research framework exploring the transition from Artificial General Intelligence (AGI) to Super Autonomous Intelligence (SAI). It introduces the <strong>SHARP</strong> five-dimensional framework (Space, Human, Agent, Robot, Power) and the <strong>MOMENT</strong> six-matrices analytical model, mapping the critical technologies that will define the next decade of intelligent systems.
-        </p>
-      </div>
-
-      <!-- Quick Chapter Links -->
-      <div class="mt-10 pt-8 border-t border-[#e5e2dd]">
-        <p class="text-[11px] font-sans font-medium text-[#8a8a8a] uppercase tracking-wider mb-4">Jump to Chapter</p>
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-1">
-          <a href="#the-agi-countdown-and-humanitys-crossroads" class="block py-1 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors no-underline"><span class="text-[#8a8a8a] mr-2 font-mono text-[11px]">01</span>AGI Countdown</a>
-          <a href="#entropy-energy-efficiency" class="block py-1 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors no-underline"><span class="text-[#8a8a8a] mr-2 font-mono text-[11px]">02</span>Entropy</a>
-          <a href="#the-sharp-five-dimensional-framework-moment-six-matrices-sai-ultimate-goal" class="block py-1 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors no-underline"><span class="text-[#8a8a8a] mr-2 font-mono text-[11px]">03</span>Framework</a>
-          <a href="#s-space-the-frontier-of-spatial-computing" class="block py-1 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors no-underline"><span class="text-[#8a8a8a] mr-2 font-mono text-[11px]">04</span>S-SPACE</a>
-          <a href="#a-agent-the-agent-technology-stack" class="block py-1 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors no-underline"><span class="text-[#8a8a8a] mr-2 font-mono text-[11px]">05</span>A-AGENT</a>
-          <a href="#r-robot-embodied-intelligence-technology" class="block py-1 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors no-underline"><span class="text-[#8a8a8a] mr-2 font-mono text-[11px]">06</span>R-ROBOT</a>
-          <a href="#p-power-energy-technology-panorama" class="block py-1 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors no-underline"><span class="text-[#8a8a8a] mr-2 font-mono text-[11px]">07</span>P-POWER</a>
-          <a href="#mixed-space-mixed-space-technology-stack" class="block py-1 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors no-underline"><span class="text-[#8a8a8a] mr-2 font-mono text-[11px]">08</span>Mixed Space</a>
-          <a href="#original-space-remote-physical-space-exploration" class="block py-1 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors no-underline"><span class="text-[#8a8a8a] mr-2 font-mono text-[11px]">09</span>Original Space</a>
-          <a href="#model-token-the-technical-encoding-of-memory" class="block py-1 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors no-underline"><span class="text-[#8a8a8a] mr-2 font-mono text-[11px]">10</span>Model Token</a>
-          <a href="#exchange-token-the-protocol-grammar-of-memory-exchange" class="block py-1 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors no-underline"><span class="text-[#8a8a8a] mr-2 font-mono text-[11px]">11</span>Exchange Token</a>
-          <a href="#nuclear-power-computing-centralized-energy-for-cognition" class="block py-1 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors no-underline"><span class="text-[#8a8a8a] mr-2 font-mono text-[11px]">12</span>Nuclear Power Computing</a>
-          <a href="#thin-film-solar-computing-distributed-energy-for-cognition" class="block py-1 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors no-underline"><span class="text-[#8a8a8a] mr-2 font-mono text-[11px]">13</span>Thin-Film Solar Power Computing</a>
-          <a href="#chapter-15-safer-distributed-memory-system" class="block py-1 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors no-underline"><span class="text-[#8a8a8a] mr-2 font-mono text-[11px]">15</span>SAFER</a>
-          <a href="#chapter-16-magic-the-distributed-perception-system" class="block py-1 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors no-underline"><span class="text-[#8a8a8a] mr-2 font-mono text-[11px]">16</span>MAGIC</a>
-          <a href="#chapter-17-turbo-the-distributed-cognitive-energy-system" class="block py-1 text-sm text-[#4a4a4a] hover:text-[#1a1a1a] transition-colors no-underline"><span class="text-[#8a8a8a] mr-2 font-mono text-[11px]">17</span>TURBO</a>
-        </div>
-      </div>
-    </div>
+    <span class="topbar-chapter" id="topbar-chapter">Cover</span>
   </header>
 
-  <!-- ==================== TABLE OF CONTENTS ==================== -->
-  <section id="toc-section" class="py-10 border-t border-[#e5e2dd]">
-    <div class="max-w-[720px] mx-auto px-6">
-      <button id="toc-toggle" class="w-full flex items-center justify-between py-2 group" aria-expanded="false" aria-controls="toc-content">
-        <h2 class="font-sans text-2xl font-semibold tracking-tight text-[#1a1a1a]">Table of Contents</h2>
-        <svg id="toc-chevron" class="w-5 h-5 text-[#8a8a8a] transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
-      </button>
-      <div id="toc-content" class="hidden mt-4">
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-x-8 gap-y-6 text-sm">
-          <div>
-            <p class="font-sans font-semibold text-[13px] text-[#8a8a8a] uppercase tracking-wider mb-2">Part I: Urgency &amp; Framework</p>
-            <ul class="space-y-1">
-              <li><a href="#abstract" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline">Abstract</a></li>
-              <li><a href="#the-agi-countdown-and-humanitys-crossroads" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline"><span class="font-mono text-[11px] text-[#8a8a8a] mr-1.5">Ch 1</span>The AGI Countdown</a></li>
-              <li><a href="#entropy-energy-efficiency" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline"><span class="font-mono text-[11px] text-[#8a8a8a] mr-1.5">Ch 2</span>Entropy = Energy x Efficiency</a></li>
-              <li><a href="#the-sharp-five-dimensional-framework-moment-six-matrices-sai-ultimate-goal" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline"><span class="font-mono text-[11px] text-[#8a8a8a] mr-1.5">Ch 3</span>SHARP + MOMENT + SAI</a></li>
-            </ul>
-          </div>
-          <div>
-            <p class="font-sans font-semibold text-[13px] text-[#8a8a8a] uppercase tracking-wider mb-2">Part II: Infrastructure</p>
-            <ul class="space-y-1">
-              <li><a href="#s-space-the-frontier-of-spatial-computing" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline"><span class="font-mono text-[11px] text-[#8a8a8a] mr-1.5">Ch 4</span>S-SPACE</a></li>
-              <li><a href="#a-agent-the-agent-technology-stack" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline"><span class="font-mono text-[11px] text-[#8a8a8a] mr-1.5">Ch 5</span>A-AGENT</a></li>
-              <li><a href="#r-robot-embodied-intelligence-technology" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline"><span class="font-mono text-[11px] text-[#8a8a8a] mr-1.5">Ch 6</span>R-ROBOT</a></li>
-              <li><a href="#p-power-energy-technology-panorama" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline"><span class="font-mono text-[11px] text-[#8a8a8a] mr-1.5">Ch 7</span>P-POWER</a></li>
-            </ul>
-          </div>
-          <div>
-            <p class="font-sans font-semibold text-[13px] text-[#8a8a8a] uppercase tracking-wider mb-2">Part III: Application Technology</p>
-            <ul class="space-y-1">
-              <li><a href="#mixed-space-mixed-space-technology-stack" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline"><span class="font-mono text-[11px] text-[#8a8a8a] mr-1.5">Ch 8</span>Mixed Space</a></li>
-              <li><a href="#original-space-remote-physical-space-exploration" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline"><span class="font-mono text-[11px] text-[#8a8a8a] mr-1.5">Ch 9</span>Original Space</a></li>
-              <li><a href="#model-token-the-technical-encoding-of-memory" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline"><span class="font-mono text-[11px] text-[#8a8a8a] mr-1.5">Ch 10</span>Model Token</a></li>
-              <li><a href="#exchange-token-the-protocol-grammar-of-memory-exchange" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline"><span class="font-mono text-[11px] text-[#8a8a8a] mr-1.5">Ch 11</span>Exchange Token</a></li>
-              <li><a href="#nuclear-power-computing-centralized-energy-for-cognition" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline"><span class="font-mono text-[11px] text-[#8a8a8a] mr-1.5">Ch 12</span>Nuclear Power</a></li>
-              <li><a href="#thin-film-solar-computing-distributed-energy-for-cognition" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline"><span class="font-mono text-[11px] text-[#8a8a8a] mr-1.5">Ch 13</span>Thin-Film Solar</a></li>
-            </ul>
-          </div>
-          <div>
-            <p class="font-sans font-semibold text-[13px] text-[#8a8a8a] uppercase tracking-wider mb-2">Part IV: Products &amp; Appendices</p>
-            <ul class="space-y-1">
-              <li><a href="#chapter-15-safer-distributed-memory-system" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline"><span class="font-mono text-[11px] text-[#8a8a8a] mr-1.5">Ch 15</span>SAFER — Distributed Memory</a></li>
-              <li><a href="#chapter-16-magic-the-distributed-perception-system" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline"><span class="font-mono text-[11px] text-[#8a8a8a] mr-1.5">Ch 16</span>MAGIC — Distributed Perception</a></li>
-              <li><a href="#chapter-17-turbo-the-distributed-cognitive-energy-system" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline"><span class="font-mono text-[11px] text-[#8a8a8a] mr-1.5">Ch 17</span>TURBO — Distributed Cognition</a></li>
-              <li><a href="#appendix-a-core-glossary" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline">Appendix A: Glossary</a></li>
-              <li><a href="#appendix-b-sharp-five-dimensions-moment-six-matrices-complete-mapping-table" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline">Appendix B: Mapping Table</a></li>
-              <li><a href="#appendix-c-three-pillar-neuroscience-mapping-table" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline">Appendix C: Neuroscience</a></li>
-              <li><a href="#appendix-d-2025-2035-technology-evolution-roadmap" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline">Appendix D: Roadmap</a></li>
-              <li><a href="#appendix-e-full-legal-disclaimer" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline">Appendix E: Disclaimer</a></li>
-              <li><a href="#appendix-f-academic-honesty-statement" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline">Appendix F: Academic</a></li>
-              <li><a href="#appendix-g-sai-sad-quantitative-assessment-framework" class="text-[#4a4a4a] hover:text-[#1a1a1a] no-underline">Appendix G: SAI-SAD</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ==================== MAIN CONTENT ==================== -->
-  <main id="main-content" class="pb-20">
-    <div class="max-w-[720px] mx-auto px-6">
+  <!-- Content -->
+  <div class="content-wrap" id="content-area">
+<div class="chapter active" data-chapter="0" id="ch-cover">
+v class="max-w-[720px] mx-auto px-6">
 
 <hr />
 <blockquote>
@@ -280,13 +217,7 @@ class="header-section-number">0.2</span> Table of Contents</h2>
 <h3 data-number="0.2.1" id="part-i-urgency-and-framework"><span
 class="header-section-number">0.2.1</span> Part I: Urgency and
 Framework</h3>
-<ul>
-<li><strong>Chapter 1</strong> The AGI Countdown and Humanity’s
-Crossroads</li>
-<li><strong>Chapter 2</strong> Entropy = Energy × Efficiency</li>
-<li><strong>Chapter 3</strong> The SHARP Five-Dimensional Framework +
-MOMENT Six Matrices + SAI Ultimate Goal</li>
-</ul>
+
 <h3 data-number="0.2.2"
 id="part-ii-sharp-five-dimensions-infrastructure-deep-analysis"><span
 class="header-section-number">0.2.2</span> Part II: SHARP Five
@@ -347,6 +278,9 @@ Mapping Table</li>
 <li>Appendix F: Academic Honesty Statement</li>
 </ul>
 <hr />
+
+</div>
+<div class="chapter" data-chapter="1" id="ch-1">
 <h1 data-number="1"
 id="the-agi-countdown-and-humanitys-crossroads"><span
 class="header-section-number">1</span> The AGI Countdown and Humanity’s
@@ -1336,6 +1270,9 @@ intelligent agents. This report chooses the second path—not because it
 is easier, but because it is the only safe one.</p>
 <hr />
 <hr />
+
+</div>
+<div class="chapter" data-chapter="2" id="ch-2">
 <h1 data-number="2" id="entropy-energy-efficiency"><span
 class="header-section-number">2</span> Entropy = Energy ×
 Efficiency</h1>
@@ -2044,6 +1981,9 @@ sentence:</p>
 <p>This is my Energism. This is the starting point of SHARP MOMENT.</p>
 <hr />
 <hr />
+
+</div>
+<div class="chapter" data-chapter="3" id="ch-3">
 <h1 data-number="3"
 id="the-sharp-five-dimensional-framework-moment-six-matrices-sai-ultimate-goal"><span
 class="header-section-number">3</span> The SHARP Five-Dimensional
@@ -3380,6 +3320,9 @@ judgment and consult professional advisors.</p>
 </blockquote>
 <hr />
 <hr />
+
+</div>
+<div class="chapter" data-chapter="4" id="ch-4">
 <h1 data-number="4" id="s-space-the-frontier-of-spatial-computing"><span
 class="header-section-number">4</span> S-SPACE: The Frontier of Spatial
 Computing</h1>
@@ -3472,11 +3415,7 @@ role="doc-noteref"><sup>159</sup></a>. The core insight behind AI
 glasses is: when AR display technology is not yet mature, use AI
 capabilities and everyday wearability to educate the market first.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Table 4-1</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Table 4-1</figcaption>
 </figure>
 <p>The table above presents not merely a comparison of technical
@@ -3589,11 +3528,7 @@ Nervous System of Spatial Computing</h3>
 of spatial computing—it enables a device to know where it is and what
 its surrounding environment is.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Table 4-2</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Table 4-2</figcaption>
 </figure>
 <p><strong>Inside-out visual SLAM</strong> has become the mainstream
@@ -3644,11 +3579,7 @@ BCI is the most powerful weapon against “spatial entrypoint monopoly”:
 if humans can interact with AI directly through the brain, any screen
 monopoly becomes meaningless.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Table 4-3</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Table 4-3</figcaption>
 </figure>
 <h3 data-number="4.2.1"
@@ -3826,11 +3757,7 @@ rasterization operations.</p>
 <p>The performance improvement brought by this approach is
 revolutionary:</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Table 4-4</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Table 4-4</figcaption>
 </figure>
 <p>Rendering speed leaps from NeRF’s &lt;1 fps to &gt;100 fps, an
@@ -3904,11 +3831,7 @@ ecosystem. Without spatial anchoring, AR content is merely a layer
 floating in the field of view; with spatial anchoring, digital content
 gains an “address” in the physical world.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Table 4-5</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Table 4-5</figcaption>
 </figure>
 <p><strong>Apple ARKit</strong>’s ARAnchor, combined with LiDAR, can
@@ -3969,11 +3892,7 @@ and capital. The policy posture and capital investment of governments
 toward AR/VR/MR/BCI directly influence the speed of technology route
 evolution and the formation of market dynamics.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Table 4-6</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Table 4-6</figcaption>
 </figure>
 <h3 data-number="4.5.1"
@@ -4799,6 +4718,9 @@ open spatial interfaces (SPACE), the HUMAN dimension ensures that every
 bit of data in this interaction is protected, and every decision
 preserves human agency.</p>
 <hr />
+
+</div>
+<div class="chapter" data-chapter="5" id="ch-5">
 <h1 data-number="5" id="a-agent-the-agent-technology-stack"><span
 class="header-section-number">5</span> A-AGENT: The Agent Technology
 Stack</h1>
@@ -5179,11 +5101,7 @@ monthly downloads; MCP approached this level in just 16 months <a
 href="#fn279" class="footnote-ref" id="fnref279"
 role="doc-noteref"><sup>279</sup></a>.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">MCP Ecosystem Growth and Agent Market Size</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">MCP Ecosystem Growth and Agent Market
 Size</figcaption>
 </figure>
@@ -5371,11 +5289,7 @@ hijacking success rates in red team testing, while baseline defenses
 only blocked 11% of attacks <a href="#fn293" class="footnote-ref"
 id="fnref293" role="doc-noteref"><sup>293</sup></a>.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Agent Technology Stack Multi-Dimensional Maturity Assessment</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Agent Technology Stack Multi-Dimensional
 Maturity Assessment</figcaption>
 </figure>
@@ -5744,6 +5658,9 @@ qualitative leap in cognitive coverage and robustness. This is not one
 Agent becoming a million times stronger—it is a million Agents learning
 to collectively “see” a larger world together.</p>
 <hr />
+
+</div>
+<div class="chapter" data-chapter="6" id="ch-6">
 <h1 data-number="6" id="r-robot-embodied-intelligence-technology"><span
 class="header-section-number">6</span> R-ROBOT: Embodied Intelligence
 Technology</h1>
@@ -5853,11 +5770,7 @@ role="doc-noteref"><sup>331</sup></a>.</p>
 class="header-section-number">6.1.3</span> Core Parameter Panoramic
 Comparison</h3>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 7-1 Global Humanoid Robot Technical Parameter Panoramic Comparison (2025)</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 7-1 Global Humanoid Robot
 Technical Parameter Panoramic Comparison (2025)</figcaption>
 </figure>
@@ -6143,11 +6056,7 @@ ecosystem-related revenue of USD 2.8 billion <a href="#fn355"
 class="footnote-ref" id="fnref355"
 role="doc-noteref"><sup>355</sup></a>.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 7-2 VLA Model Architecture Evolution Diagram (2022-2025)</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 7-2 VLA Model Architecture
 Evolution Diagram (2022-2025)</figcaption>
 </figure>
@@ -6394,6 +6303,9 @@ investors should exercise independent judgment and consult professional
 advisors.</p>
 </blockquote>
 <hr />
+
+</div>
+<div class="chapter" data-chapter="7" id="ch-7">
 <h1 data-number="7" id="p-power-energy-technology-panorama"><span
 class="header-section-number">7</span> P-POWER: Energy Technology
 Panorama</h1>
@@ -6476,11 +6388,7 @@ that U.S. data center electricity demand alone will reach approximately
 2024 <a href="#fn391" class="footnote-ref" id="fnref391"
 role="doc-noteref"><sup>391</sup></a>.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">AI Electricity Demand Growth Curve</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">AI Electricity Demand Growth
 Curve</figcaption>
 </figure>
@@ -6802,11 +6710,7 @@ with PUE as low as 1.02-1.05 and cooling capacity exceeding 250 kW per
 rack <a href="#fn433" class="footnote-ref" id="fnref433"
 role="doc-noteref"><sup>433</sup></a>.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Data Center Cooling Technology Comparison</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Data Center Cooling Technology
 Comparison</figcaption>
 </figure>
@@ -7067,11 +6971,7 @@ tasks — document processing, code assistance, knowledge Q&amp;A, and
 more. For more complex training tasks, surplus compute across multiple
 nodes can be aggregated at the community level through microgrids.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Distributed Energy and SAI Architecture Diagram</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Distributed Energy and SAI Architecture
 Diagram</figcaption>
 </figure>
@@ -7559,6 +7459,9 @@ Investors should exercise independent judgment and consult professional
 advisors.</p>
 </blockquote>
 <hr />
+
+</div>
+<div class="chapter" data-chapter="8" id="ch-8">
 <h1 data-number="8" id="mixed-space-mixed-space-technology-stack"><span
 class="header-section-number">8</span> Mixed Space: Mixed Space
 Technology Stack</h1>
@@ -8676,6 +8579,9 @@ scientific literature and clinical trial data.</p>
 <hr />
 <p><strong>Chapter Notes:</strong></p>
 <hr />
+
+</div>
+<div class="chapter" data-chapter="9" id="ch-9">
 <h1 data-number="9"
 id="original-space-remote-physical-space-exploration"><span
 class="header-section-number">9</span> Original Space: Remote Physical
@@ -9251,11 +9157,7 @@ directly output motor control signals.</p>
 class="header-section-number">9.3.1</span> Complete VLA Evolution
 Timeline</h3>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 10-2: VLA Model Architecture Evolution Flowchart</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 10-2: VLA Model Architecture
 Evolution Flowchart</figcaption>
 </figure>
@@ -9408,11 +9310,7 @@ accelerating global innovation.</p>
 class="header-section-number">9.3.2</span> Sim-to-Real Transfer
 Technology</h3>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 10-3: Sim-to-Real Transfer Technology Pathway Diagram</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 10-3: Sim-to-Real Transfer
 Technology Pathway Diagram</figcaption>
 </figure>
@@ -9584,11 +9482,7 @@ id="satellite-internet-space-based-digital-infrastructure"><span
 class="header-section-number">9.5.2</span> Satellite Internet:
 Space-Based Digital Infrastructure</h3>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 10-4: Aerospace Milestone Timeline</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 10-4: Aerospace Milestone
 Timeline</figcaption>
 </figure>
@@ -9953,11 +9847,7 @@ capabilities. Japan’s H3 rocket achieved its successful maiden flight in
 <h3 data-number="9.6.2" id="capital-market-dynamics"><span
 class="header-section-number">9.6.2</span> Capital Market Dynamics</h3>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 10-5: Global Space Economy Market Forecast</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 10-5: Global Space Economy Market
 Forecast</figcaption>
 </figure>
@@ -10056,6 +9946,9 @@ market data, and policy analysis in the report are based on publicly
 available information and may be outdated or inaccurate.</p>
 </blockquote>
 <hr />
+
+</div>
+<div class="chapter" data-chapter="10" id="ch-10">
 <h1 data-number="10"
 id="model-token-the-technical-encoding-of-memory"><span
 class="header-section-number">10</span> Model Token: The Technical
@@ -10132,11 +10025,7 @@ domain knowledge (through enormous total parameters) while performing
 inference at extremely low computational cost (through sparse
 activation).</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">MoE Architecture Comparison</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">MoE Architecture Comparison</figcaption>
 </figure>
 <p>The figure above compares the core differences between Dense and MoE
@@ -10478,11 +10367,7 @@ leaps over the past eight years, with each leap achieving
 order-of-magnitude improvements in naturalness, controllability, and
 generalization capability.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">TTS &amp; Voice Model Evolution</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">TTS &amp; Voice Model
 Evolution</figcaption>
 </figure>
@@ -10597,11 +10482,7 @@ Experiments show that when running thousands of Agents, AIOS can reduce
 latency for Mistral and Llama models by nearly 2× compared to
 traditional Linux[^172^].</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Model as OS Architecture</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Model as OS Architecture</figcaption>
 </figure>
 <p>The figure above shows the layered architecture of Model-as-OS. The
@@ -10749,11 +10630,7 @@ TensorFlow, providing unified inference APIs on Windows, Linux, macOS,
 iOS, and Android. ONNX Runtime’s mobile optimizations (ORT Mobile) make
 running compressed language models on smartphones a reality.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Edge AI Market Forecast</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Edge AI Market Forecast</figcaption>
 </figure>
 <p>The figure above shows the global mobile AI market growth forecast
@@ -11144,6 +11021,9 @@ building block of the distributed SAI network. The next chapter will
 turn to the fourth column of the MOMENT matrix: Exchange Token — the
 circulation protocol of value.</em></p>
 <hr />
+
+</div>
+<div class="chapter" data-chapter="11" id="ch-11">
 <h1 data-number="11"
 id="exchange-token-the-protocol-grammar-of-memory-exchange"><span
 class="header-section-number">11</span> Exchange Token: The Protocol
@@ -11262,11 +11142,7 @@ id="fnref676" role="doc-noteref"><sup>676</sup></a>. It is projected to
 halve again in 2028 to 1.5625 BTC, until approximately 2140 when the
 last satoshi (1 BTC = 10⁸ satoshi) is mined.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 12-5: BTC Halving Cycle and Price Evolution</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 12-5: BTC Halving Cycle and Price
 Evolution</figcaption>
 </figure>
@@ -11305,11 +11181,7 @@ in 2025, energy efficiency has improved by approximately 125× over seven
 years<a href="#fn678" class="footnote-ref" id="fnref678"
 role="doc-noteref"><sup>678</sup></a>.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 12-3: BTC Mining Hardware Generational Evolution</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 12-3: BTC Mining Hardware
 Generational Evolution</figcaption>
 </figure>
@@ -11544,11 +11416,7 @@ payment scenarios. Layer 2 (Layer 2) solutions achieve
 order-of-magnitude scaling by moving most transactions off-chain for
 processing, without changing the underlying protocol.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 12-1: BTC Layer 2 Network Technology Stack Panorama</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 12-1: BTC Layer 2 Network
 Technology Stack Panorama</figcaption>
 </figure>
@@ -11581,11 +11449,7 @@ elegance of this design lies in its “trustlessness” — if any
 intermediate node refuses to forward, the time lock expires and funds
 automatically return.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 12-2: Lightning Network HTLC Multi-Hop Payment Routing Principle</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 12-2: Lightning Network HTLC
 Multi-Hop Payment Routing Principle</figcaption>
 </figure>
@@ -11718,11 +11582,7 @@ for services with Tokens, when RWA assets need pricing units, when
 cross-border payments need value carriers, stablecoins provide this
 function.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 12-4: Major Stablecoin Technical Mechanisms and Risk Characteristics Comparison</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 12-4: Major Stablecoin Technical
 Mechanisms and Risk Characteristics Comparison</figcaption>
 </figure>
@@ -12112,11 +11972,7 @@ comprehensive ban, from the EU’s MiCA framework to Hong Kong’s licensed
 openness, countries are responding to this emerging asset class in
 vastly different ways.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 12-6: Global Major Jurisdiction Crypto Regulatory Policy Heatmap</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 12-6: Global Major Jurisdiction
 Crypto Regulatory Policy Heatmap</figcaption>
 </figure>
@@ -12345,6 +12201,9 @@ Comparison</td>
 <hr />
 <p><strong>Chapter Citation Source Notes</strong></p>
 <hr />
+
+</div>
+<div class="chapter" data-chapter="12" id="ch-12">
 <h1 data-number="12"
 id="nuclear-power-computing-centralized-energy-for-cognition"><span
 class="header-section-number">12</span> Nuclear Power Computing:
@@ -12664,11 +12523,7 @@ experiment will be conducted at the Paul Scherrer Institute (PSI) in
 Switzerland<a href="#fn749" class="footnote-ref" id="fnref749"
 role="doc-noteref"><sup>749</sup></a>.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 13-1: Panoramic Comparison of Generation IV Nuclear Energy Technology Pathways</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 13-1: Panoramic Comparison of
 Generation IV Nuclear Energy Technology Pathways</figcaption>
 </figure>
@@ -12685,11 +12540,7 @@ utilization, waste management, and resource security that make it the
 most powerful agent of change in the post-2040 nuclear energy
 landscape.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 13-8: Thorium Molten Salt Reactor (TMSR) Technical Principles and Fuel Cycle Schematic</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 13-8: Thorium Molten Salt Reactor
 (TMSR) Technical Principles and Fuel Cycle Schematic</figcaption>
 </figure>
@@ -12725,11 +12576,7 @@ Energy Storage Systems</h3>
 divided into four technology systems, each applicable to different
 temperature ranges and application scenarios.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 13-2: Comprehensive Comparison of Four Molten Salt Energy Storage Systems</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 13-2: Comprehensive Comparison of
 Four Molten Salt Energy Storage Systems</figcaption>
 </figure>
@@ -12786,11 +12633,7 @@ technology. In the 600-900°C high-temperature, strongly corrosive ion
 (fluoride or chloride) and strong neutron irradiation triple-coupling
 environment, traditional materials science faces severe challenges.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 13-3: Comprehensive Comparison of Anti-Corrosion Materials for Molten Salt Energy Storage</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 13-3: Comprehensive Comparison of
 Anti-Corrosion Materials for Molten Salt Energy Storage</figcaption>
 </figure>
@@ -12964,11 +12807,7 @@ their extremely high engineering complexity and construction costs, with
 commercialization prospects in the near term not as promising as the
 tokamak pathway.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 13-4: Global Nuclear Fusion Technology Roadmap Timeline</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 13-4: Global Nuclear Fusion
 Technology Roadmap Timeline</figcaption>
 </figure>
@@ -13173,11 +13012,7 @@ cooling</strong> (D2C, 80-100 kW/rack, PUE 1.05-1.15)<a href="#fn782"
 class="footnote-ref" id="fnref782"
 role="doc-noteref"><sup>782</sup></a>.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 13-6: Global Data Center Liquid Cooling Market Size Forecast</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 13-6: Global Data Center Liquid
 Cooling Market Size Forecast</figcaption>
 </figure>
@@ -13258,11 +13093,7 @@ density exceeds 100 kW, traditional 60 Hz transformers have become a
 critical infrastructure bottleneck<a href="#fn788" class="footnote-ref"
 id="fnref788" role="doc-noteref"><sup>788</sup></a>.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 13-5: Centralized Compute Center Technology Stack Panoramic View</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 13-5: Centralized Compute Center
 Technology Stack Panoramic View</figcaption>
 </figure>
@@ -13415,11 +13246,7 @@ renaissance and concerns about uranium supply bottlenecks<a
 href="#fn802" class="footnote-ref" id="fnref802"
 role="doc-noteref"><sup>802</sup></a>.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 13-7: Global Nuclear Power Policy and Investment Panoramic Map</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 13-7: Global Nuclear Power Policy
 and Investment Panoramic Map</figcaption>
 </figure>
@@ -13535,6 +13362,9 @@ Cycle Schematic</td>
 <h2 data-number="12.8" id="chapter-sources"><span
 class="header-section-number">12.8</span> Chapter Sources</h2>
 <hr />
+
+</div>
+<div class="chapter" data-chapter="13" id="ch-13">
 <h1 data-number="13"
 id="thin-film-solar-computing-distributed-energy-for-cognition"><span
 class="header-section-number">13</span> Thin-Film Solar Computing:
@@ -13616,11 +13446,7 @@ advantage — a pure black, grid-line-free appearance — gives it unique
 premium pricing power in the high-end distributed and BIPV markets, but
 complex process flows also limit its capacity expansion speed.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Photovoltaic Technology Pathway Efficiency Comparison</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Photovoltaic Technology Pathway
 Efficiency Comparison</figcaption>
 </figure>
@@ -13678,11 +13504,7 @@ reduce land footprint and BOS (Balance of System) costs by approximately
 15% at the same installed capacity, delivering disruptive value in
 land-constrained, high-density markets such as Europe and Japan.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Perovskite Tandem Band Structure</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Perovskite Tandem Band
 Structure</figcaption>
 </figure>
@@ -14044,11 +13866,7 @@ to large cities and industrial centers. In the long term, a hybrid
 architecture — LEO constellations for global coverage, GEO systems for
 high-power baseload — may be the ultimate form of SBSP.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Space-Based Solar Power SBSP System Architecture</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Space-Based Solar Power SBSP System
 Architecture</figcaption>
 </figure>
@@ -14144,11 +13962,7 @@ saves approximately $5.8 million in CAPEX per 10 MW of capacity<a
 href="#fn839" class="footnote-ref" id="fnref839"
 role="doc-noteref"><sup>839</sup></a>.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">800V DC Direct-Connect Architecture</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">800V DC Direct-Connect
 Architecture</figcaption>
 </figure>
@@ -14214,11 +14028,7 @@ role="doc-noteref"><sup>843</sup></a>. The steepness of this growth
 curve bears a striking resemblance to the photovoltaic market’s
 development trajectory a decade ago.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Global Energy Storage Installation Forecast</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Global Energy Storage Installation
 Forecast</figcaption>
 </figure>
@@ -14443,11 +14253,7 @@ field in 2028-2030, subsequently expanding to the stationary energy
 storage market<a href="#fn865" class="footnote-ref" id="fnref865"
 role="doc-noteref"><sup>865</sup></a>.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Electrochemical Energy Storage Six-Dimensional Comprehensive Comparison</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Electrochemical Energy Storage
 Six-Dimensional Comprehensive Comparison</figcaption>
 </figure>
@@ -14655,11 +14461,7 @@ role="doc-noteref"><sup>880</sup></a>. The Asia-Pacific region
 share, primarily driven by the region’s government push for building
 solar and massive new construction volumes.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Flexible Photovoltaics and BIPV Applications</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Flexible Photovoltaics and BIPV
 Applications</figcaption>
 </figure>
@@ -14764,11 +14566,7 @@ project revenue rights transfer and other financial instruments are also
 lowering financing barriers for distributed photovoltaic and energy
 storage projects.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Global Photovoltaic Industry Chain Distribution</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Global Photovoltaic Industry Chain
 Distribution</figcaption>
 </figure>
@@ -15215,11 +15013,7 @@ is not the purpose, trust is</strong>. Each encryption key corresponds
 to a trust relationship, just as every social memory in the brain
 carries an emotional tag.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">SAFER Five-Module System Architecture Diagram</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">SAFER Five-Module System Architecture
 Diagram</figcaption>
 </figure>
@@ -15460,11 +15254,7 @@ such as Google Photos, Apple iCloud, and Notion AI — the latter upload
 user data to remote servers for processing, making a trade-off that
 favors convenience over privacy. SAFER makes a different choice.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Perception → Memory → Cognitive Data Flow Diagram</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Perception → Memory → Cognitive Data Flow
 Diagram</figcaption>
 </figure>
@@ -15637,11 +15427,7 @@ users, if every query requires cloud inference, operating costs would
 consume all profits. Edge-device deployment is the inevitable
 evolutionary direction of AI business models.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">My Safer AI Concept Diagram</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">My Safer AI Concept Diagram</figcaption>
 </figure>
 <p>The figure above shows the My Safer AI product concept vision. At the
@@ -15784,11 +15570,7 @@ sensitive data, crypto assets, private communications, and other
 scenarios, SAFER provides security guarantees that cloud services cannot
 offer.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">SAFER vs Cloud AI Assistant Privacy Comparison Table</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">SAFER vs Cloud AI Assistant Privacy
 Comparison Table</figcaption>
 </figure>
@@ -16011,11 +15793,7 @@ interaction for robot control and digital avatar dialogue<a
 href="#fn927" class="footnote-ref" id="fnref927"
 role="doc-noteref"><sup>927</sup></a>.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 16-1: MAGIC Five-Module System Architecture — M-Memory (Spatial Encoding &amp; Replay), A-AR (Remote Spatial Telepresence), G-Glass (Visual Enhancement), I-Interactive (Motor Intention Recognition), C-Camera (Multimodal Perception) operating cooperatively around the Perception Core Engine</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 16-1: MAGIC Five-Module System
 Architecture — M-Memory (Spatial Encoding &amp; Replay), A-AR (Remote
 Spatial Telepresence), G-Glass (Visual Enhancement), I-Interactive
@@ -16227,11 +16005,7 @@ mechanisms to simulate the SC’s “saliency detection” function —
 identifying important events in the environment that require the user’s
 attention.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 16-2: Perception → Memory → Cognition Data Flow Closed Loop. Multimodal information captured by MAGIC (perception layer) is encoded and stored by SAFER (memory layer), reasoned and decided upon by TURBO (cognition layer), and ultimately outputs action commands that feed back into the environment to form a closed-loop iteration</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 16-2: Perception → Memory →
 Cognition Data Flow Closed Loop. Multimodal information captured by
 MAGIC (perception layer) is encoded and stored by SAFER (memory layer),
@@ -16363,11 +16137,7 @@ supports 4.3K×4.3K resolution per eye at 90fps, with GPU performance
 class="footnote-ref" id="fnref950"
 role="doc-noteref"><sup>950</sup></a>.</p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Figure 16-3: MAGIC Glass Concept — AI-Enhanced Visual Perception Terminal, Integrating Micro-LED Lightguide Display, Multimodal Perception, and On-Device AI Inference</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Figure 16-3: MAGIC Glass Concept —
 AI-Enhanced Visual Perception Terminal, Integrating Micro-LED Lightguide
 Display, Multimodal Perception, and On-Device AI Inference</figcaption>
@@ -16706,6 +16476,9 @@ Investors should exercise independent judgment and consult professional
 advisors.</p>
 </blockquote>
 <hr />
+
+</div>
+<div class="chapter" data-chapter="14" id="ch-14">
 <h1 data-number="14"
 id="chapter-17-turbo-the-distributed-cognitive-energy-system"><span
 class="header-section-number">14</span> Chapter 17: TURBO — The
@@ -16975,11 +16748,7 @@ over hundreds of millions of years of evolution provides a validated
 functional blueprint for TURBO’s engineering implementation.</p>
 <p><strong>Figure 1: TURBO Five-Module System Architecture</strong></p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">TURBO Five-Module System Architecture</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">TURBO Five-Module System
 Architecture</figcaption>
 </figure>
@@ -17198,11 +16967,7 @@ be flexibly configured according to scenario
 characteristics.</strong></p>
 <p><strong>Figure 2: Dual-Path Energy Supply Architecture</strong></p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Dual-Path Energy Supply Architecture</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Dual-Path Energy Supply
 Architecture</figcaption>
 </figure>
@@ -17269,11 +17034,7 @@ storage, the energy system CAPEX for a home TURBO node falls in the
 $10K–25K range, but can achieve 80–90% energy self-sufficiency.</p>
 <p><strong>Figure 3: Home TURBO Node Concept</strong></p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Home TURBO Node Concept</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Home TURBO Node Concept</figcaption>
 </figure>
 <p><em>Figure 3: Home TURBO Node Concept. Showing an autonomous AI
@@ -17567,11 +17328,7 @@ class="header-section-number">14.5.2</span> Centralized vs. Distributed:
 <p><strong>Figure 4: Centralized vs. Distributed Energy Supply Economic
 Comparison</strong></p>
 <figure>
-<div class="my-6 p-6 bg-gradient-to-br from-[#f8f6f3] to-[#f0ede8] border border-[#e5e2dd] rounded-xl text-center">
-  <div class="text-3xl mb-3">📊</div>
-  <p class="text-sm font-sans font-medium text-[#5a5a5a] mb-1">Centralized vs. Distributed Energy Supply Economic Comparison</p>
-  <p class="text-xs text-[#8a8a8a]">Interactive chart — available in full PDF report</p>
-</div>
+
 <figcaption aria-hidden="true">Centralized vs. Distributed Energy Supply
 Economic Comparison</figcaption>
 </figure>
@@ -23769,299 +23526,173 @@ class="footnote-back" role="doc-backlink">↩︎</a></p></li>
 </section>
 
     </div>
-  </main>
-
-  <!-- ==================== FOOTER ==================== -->
-  <footer class="border-t border-[#e5e2dd] py-12 mt-8">
-    <div class="max-w-[720px] mx-auto px-6">
-      <div class="flex flex-col sm:flex-row justify-between items-start gap-6">
-        <div>
-          <p class="font-sans font-semibold text-[15px] text-[#1a1a1a] mb-1">SHARP MOMENT v9.0</p>
-          <p class="text-sm text-[#8a8a8a]">From AGI to Super Autonomous Intelligence</p>
-          <p class="text-sm text-[#8a8a8a] mt-2"> Arthur Lee. All rights reserved.</p>
-        </div>
-        <div class="flex flex-col sm:items-end gap-2">
-          <a href="mailto:contact@sharpmoment.org" class="text-sm text-[#4a4a4a] hover:text-[#1a1a1a] no-underline transition-colors">contact@sharpmoment.org</a>
-          <a href="/SHARP_MOMENT_v9.0.pdf" class="text-sm text-[#4a4a4a] hover:text-[#1a1a1a] no-underline transition-colors">Download Full Report PDF</a>
-          <a href="#top" class="text-sm text-[#8a8a8a] hover:text-[#1a1a1a] no-underline transition-colors">Back to top</a>
-        </div>
-      </div>
-      <div class="mt-8 pt-6 border-t border-[#e5e2dd]">
-        <p class="text-xs text-[#8a8a8a] leading-relaxed">
-          This report is intended solely for technical research and academic exchange purposes and does not constitute any investment advice, securities recommendation, or asset management opinion. All data cited are from publicly available sources. The SHARP MOMENT framework mapping between neuroscience and engineering technology is a heuristic design, not a rigorous neuroscience model.
-        </p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ==================== JAVASCRIPT ==================== -->
-  <script>
-    (function() {
-      'use strict';
-
-      // ===== Mobile Menu Toggle =====
-      const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const menuIconOpen = document.getElementById('menu-icon-open');
-      const menuIconClose = document.getElementById('menu-icon-close');
-
-      if (mobileMenuBtn && mobileMenu) {
-        mobileMenuBtn.addEventListener('click', function() {
-          const isHidden = mobileMenu.classList.contains('hidden');
-          if (isHidden) {
-            mobileMenu.classList.remove('hidden');
-            menuIconOpen.classList.add('hidden');
-            menuIconClose.classList.remove('hidden');
-          } else {
-            mobileMenu.classList.add('hidden');
-            menuIconOpen.classList.remove('hidden');
-            menuIconClose.classList.add('hidden');
-          }
-        });
-
-        // Close mobile menu on link click
-        document.querySelectorAll('.mobile-nav-link').forEach(function(link) {
-          link.addEventListener('click', function() {
-            mobileMenu.classList.add('hidden');
-            menuIconOpen.classList.remove('hidden');
-            menuIconClose.classList.add('hidden');
-          });
-        });
-      }
-
-      // ===== TOC Toggle =====
-      const tocToggle = document.getElementById('toc-toggle');
-      const tocContent = document.getElementById('toc-content');
-      const tocChevron = document.getElementById('toc-chevron');
-
-      if (tocToggle && tocContent) {
-        tocToggle.addEventListener('click', function() {
-          const isHidden = tocContent.classList.contains('hidden');
-          if (isHidden) {
-            tocContent.classList.remove('hidden');
-            tocChevron.style.transform = 'rotate(180deg)';
-            tocToggle.setAttribute('aria-expanded', 'true');
-          } else {
-            tocContent.classList.add('hidden');
-            tocChevron.style.transform = 'rotate(0deg)';
-            tocToggle.setAttribute('aria-expanded', 'false');
-          }
-        });
-      }
-
-      // ===== Smooth Scroll for Anchor Links =====
-      document.querySelectorAll('a[href^="#"]').forEach(function(anchor) {
-        anchor.addEventListener('click', function(e) {
-          const href = this.getAttribute('href');
-          if (href === '#') return;
-          const target = document.querySelector(href);
-          if (target) {
-            e.preventDefault();
-            const navHeight = document.getElementById('main-nav').offsetHeight;
-            const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navHeight - 16;
-            window.scrollTo({
-              top: targetPosition,
-              behavior: 'smooth'
-            });
-          }
-        });
-      });
-
-      // ===== Scroll Spy: Active Section Highlighting =====
-      const sections = document.querySelectorAll('h1[id], h2[id]');
-      const navLinks = document.querySelectorAll('.nav-link');
-      const mainNav = document.getElementById('main-nav');
-
-      // Add scroll margin to all section headings
-      sections.forEach(function(section) {
-        section.style.scrollMarginTop = '80px';
-      });
-
-      let ticking = false;
-      function updateActiveSection() {
-        const scrollPos = window.scrollY + 100;
-        let current = '';
-
-        sections.forEach(function(section) {
-          if (section.offsetTop <= scrollPos) {
-            current = section.getAttribute('id');
-          }
-        });
-
-        navLinks.forEach(function(link) {
-          link.classList.remove('bg-[#e5e2dd]', 'text-[#1a1a1a]');
-          const href = link.getAttribute('href');
-          if (href === '#' + current) {
-            link.classList.add('bg-[#e5e2dd]', 'text-[#1a1a1a]');
-          }
-        });
-
-        // Nav background opacity on scroll
-        if (mainNav) {
-          if (window.scrollY > 50) {
-            mainNav.style.background = 'rgba(253,252,250,0.98)';
-          } else {
-            mainNav.style.background = 'rgba(253,252,250,0.95)';
-          }
-        }
-
-        ticking = false;
-      }
-
-      window.addEventListener('scroll', function() {
-        if (!ticking) {
-          requestAnimationFrame(updateActiveSection);
-          ticking = true;
-        }
-      });
-
-      // Initial call
-      updateActiveSection();
-
-      // ===== Keyboard: ESC to close mobile menu =====
-      document.addEventListener('keydown', function(e) {
-        if (e.key === 'Escape' && mobileMenu && !mobileMenu.classList.contains('hidden')) {
-          mobileMenu.classList.add('hidden');
-          menuIconOpen.classList.remove('hidden');
-          menuIconClose.classList.add('hidden');
-        }
-      });
-
-    })();
-  </script>
-
-  <!-- ==================== FLOATING READING MODE CONTROLS ==================== -->
-  <div id="reading-controls" class="fixed bottom-6 right-6 z-40 flex flex-col gap-2 items-end">
-    <!-- Chapter Nav (mobile) -->
-    <div id="chapter-nav-btn" class="lg:hidden">
-      <button onclick="document.getElementById('chapter-nav-modal').classList.toggle('hidden')" class="w-12 h-12 rounded-full bg-[#1a1a1a] text-white shadow-lg flex items-center justify-center text-lg font-medium" aria-label="Chapters">☰</button>
-    </div>
-    <!-- Reading Mode Toggle -->
-    <button id="reading-mode-toggle" onclick="toggleReadingMode()" class="w-12 h-12 rounded-full bg-[#f5f3f0] border border-[#e5e2dd] text-[#4a4a4a] shadow-lg flex items-center justify-center hover:bg-[#e5e2dd] transition-colors" aria-label="Reading Mode">📖</button>
-    <!-- Back to Top -->
-    <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" class="w-12 h-12 rounded-full bg-[#f5f3f0] border border-[#e5e2dd] text-[#4a4a4a] shadow-lg flex items-center justify-center hover:bg-[#e5e2dd] transition-colors opacity-0 pointer-events-none transition-opacity duration-300" aria-label="Back to top">↑</button>
+  
+</div>
   </div>
 
-  <!-- Mobile Chapter Navigation Modal -->
-  <div id="chapter-nav-modal" class="fixed inset-0 z-[60] hidden">
-    <div class="absolute inset-0 bg-black/50" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')"></div>
-    <div class="absolute bottom-0 left-0 right-0 bg-[#fdfcfa] rounded-t-2xl max-h-[80vh] overflow-y-auto">
-      <div class="sticky top-0 bg-[#fdfcfa] px-5 py-4 border-b border-[#e5e2dd] flex items-center justify-between">
-        <h3 class="font-sans font-semibold text-lg">Chapters</h3>
-        <button onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="p-2 text-[#8a8a8a]" aria-label="Close">✕</button>
-      </div>
-      <div class="px-5 py-3 space-y-0">
-        <div class="text-[11px] font-sans font-medium text-[#8a8a8a] uppercase tracking-wider px-3 py-2">Part I: Urgency &amp; Framework</div>
-        <a href="#the-agi-countdown-and-humanitys-crossroads" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="flex items-center gap-3 px-3 py-3 text-sm text-[#4a4a4a] hover:bg-[#f5f3f0] rounded-lg transition-colors border-b border-[#f0ede8]"><span class="font-mono text-[#8a8a8a] text-xs">01</span><span class="font-medium">The AGI Countdown</span></a>
-        <a href="#entropy-energy-efficiency" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="flex items-center gap-3 px-3 py-3 text-sm text-[#4a4a4a] hover:bg-[#f5f3f0] rounded-lg transition-colors border-b border-[#f0ede8]"><span class="font-mono text-[#8a8a8a] text-xs">02</span><span class="font-medium">Entropy = Energy x Efficiency</span></a>
-        <a href="#the-sharp-five-dimensional-framework-moment-six-matrices-sai-ultimate-goal" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="flex items-center gap-3 px-3 py-3 text-sm text-[#4a4a4a] hover:bg-[#f5f3f0] rounded-lg transition-colors border-b border-[#f0ede8]"><span class="font-mono text-[#8a8a8a] text-xs">03</span><span class="font-medium">SHARP + MOMENT + SAI</span></a>
-
-        <div class="text-[11px] font-sans font-medium text-[#8a8a8a] uppercase tracking-wider px-3 py-2 mt-3">Part II: Infrastructure</div>
-        <a href="#s-space-the-frontier-of-spatial-computing" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="flex items-center gap-3 px-3 py-3 text-sm text-[#4a4a4a] hover:bg-[#f5f3f0] rounded-lg transition-colors border-b border-[#f0ede8]"><span class="font-mono text-[#8a8a8a] text-xs">04</span><span class="font-medium">S-SPACE</span></a>
-        <a href="#a-agent-the-agent-technology-stack" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="flex items-center gap-3 px-3 py-3 text-sm text-[#4a4a4a] hover:bg-[#f5f3f0] rounded-lg transition-colors border-b border-[#f0ede8]"><span class="font-mono text-[#8a8a8a] text-xs">05</span><span class="font-medium">A-AGENT</span></a>
-        <a href="#r-robot-embodied-intelligence-technology" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="flex items-center gap-3 px-3 py-3 text-sm text-[#4a4a4a] hover:bg-[#f5f3f0] rounded-lg transition-colors border-b border-[#f0ede8]"><span class="font-mono text-[#8a8a8a] text-xs">06</span><span class="font-medium">R-ROBOT</span></a>
-        <a href="#p-power-energy-technology-panorama" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="flex items-center gap-3 px-3 py-3 text-sm text-[#4a4a4a] hover:bg-[#f5f3f0] rounded-lg transition-colors border-b border-[#f0ede8]"><span class="font-mono text-[#8a8a8a] text-xs">07</span><span class="font-medium">P-POWER</span></a>
-
-        <div class="text-[11px] font-sans font-medium text-[#8a8a8a] uppercase tracking-wider px-3 py-2 mt-3">Part III: Application Technology</div>
-        <a href="#mixed-space-mixed-space-technology-stack" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="flex items-center gap-3 px-3 py-3 text-sm text-[#4a4a4a] hover:bg-[#f5f3f0] rounded-lg transition-colors border-b border-[#f0ede8]"><span class="font-mono text-[#8a8a8a] text-xs">08</span><span class="font-medium">Mixed Space</span></a>
-        <a href="#original-space-remote-physical-space-exploration" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="flex items-center gap-3 px-3 py-3 text-sm text-[#4a4a4a] hover:bg-[#f5f3f0] rounded-lg transition-colors border-b border-[#f0ede8]"><span class="font-mono text-[#8a8a8a] text-xs">09</span><span class="font-medium">Original Space</span></a>
-        <a href="#model-token-the-technical-encoding-of-memory" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="flex items-center gap-3 px-3 py-3 text-sm text-[#4a4a4a] hover:bg-[#f5f3f0] rounded-lg transition-colors border-b border-[#f0ede8]"><span class="font-mono text-[#8a8a8a] text-xs">10</span><span class="font-medium">Model Token</span></a>
-        <a href="#exchange-token-the-protocol-grammar-of-memory-exchange" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="flex items-center gap-3 px-3 py-3 text-sm text-[#4a4a4a] hover:bg-[#f5f3f0] rounded-lg transition-colors border-b border-[#f0ede8]"><span class="font-mono text-[#8a8a8a] text-xs">11</span><span class="font-medium">Exchange Token</span></a>
-        <a href="#nuclear-power-computing-centralized-energy-for-cognition" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="flex items-center gap-3 px-3 py-3 text-sm text-[#4a4a4a] hover:bg-[#f5f3f0] rounded-lg transition-colors border-b border-[#f0ede8]"><span class="font-mono text-[#8a8a8a] text-xs">12</span><span class="font-medium">Nuclear Power Computing</span></a>
-        <a href="#thin-film-solar-computing-distributed-energy-for-cognition" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="flex items-center gap-3 px-3 py-3 text-sm text-[#4a4a4a] hover:bg-[#f5f3f0] rounded-lg transition-colors border-b border-[#f0ede8]"><span class="font-mono text-[#8a8a8a] text-xs">13</span><span class="font-medium">Thin-Film Solar Power Computing</span></a>
-
-        <div class="text-[11px] font-sans font-medium text-[#8a8a8a] uppercase tracking-wider px-3 py-2 mt-3">Part IV: Products &amp; Appendices</div>
-        <a href="#chapter-15-safer-distributed-memory-system" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="flex items-center gap-3 px-3 py-3 text-sm text-[#4a4a4a] hover:bg-[#f5f3f0] rounded-lg transition-colors border-b border-[#f0ede8]"><span class="font-mono text-[#8a8a8a] text-xs">15</span><span class="font-medium">SAFER</span></a>
-        <a href="#chapter-16-magic-the-distributed-perception-system" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="flex items-center gap-3 px-3 py-3 text-sm text-[#4a4a4a] hover:bg-[#f5f3f0] rounded-lg transition-colors border-b border-[#f0ede8]"><span class="font-mono text-[#8a8a8a] text-xs">16</span><span class="font-medium">MAGIC</span></a>
-        <a href="#chapter-17-turbo-the-distributed-cognitive-energy-system" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="flex items-center gap-3 px-3 py-3 text-sm text-[#4a4a4a] hover:bg-[#f5f3f0] rounded-lg transition-colors border-b border-[#f0ede8]"><span class="font-mono text-[#8a8a8a] text-xs">17</span><span class="font-medium">TURBO</span></a>
-        <a href="#appendix-a-core-glossary" onclick="document.getElementById('chapter-nav-modal').classList.add('hidden')" class="flex items-center gap-3 px-3 py-3 text-sm text-[#4a4a4a] hover:bg-[#f5f3f0] rounded-lg transition-colors"><span class="font-mono text-[#8a8a8a] text-xs">Ap</span><span class="font-medium">Appendices</span></a>
-      </div>
-      <div class="h-8"></div>
-    </div>
+  <!-- Bottom Navigation Bar -->
+  <div id="bottombar">
+    <button class="page-btn" id="btn-prev" onclick="goPrev()" disabled>← Previous</button>
+    <span class="progress-text" id="progress-text">1 / 26</span>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width: 4%"></div></div>
+    <button class="page-btn" id="btn-next" onclick="goNext()">Next →</button>
   </div>
 
-  <!-- Reading Mode Modal -->
-  <div id="reading-mode-modal" class="fixed bottom-24 right-6 z-50 bg-[#fdfcfa] border border-[#e5e2dd] rounded-xl shadow-xl p-4 w-64 hidden">
-    <h4 class="font-sans font-semibold text-sm mb-3">Reading Mode</h4>
-    <div class="space-y-3">
-      <div>
-        <label class="text-xs text-[#8a8a8a] block mb-1.5">Theme</label>
-        <div class="flex gap-2">
-          <button onclick="setTheme('light')" class="flex-1 py-1.5 text-xs rounded-lg bg-[#f5f3f0] hover:bg-[#e5e2dd] transition-colors">Light</button>
-          <button onclick="setTheme('dark')" class="flex-1 py-1.5 text-xs rounded-lg bg-[#2a2a2a] text-white hover:bg-[#3a3a3a] transition-colors">Dark</button>
-          <button onclick="setTheme('sepia')" class="flex-1 py-1.5 text-xs rounded-lg bg-[#f4ecd8] hover:bg-[#e8dfc5] transition-colors">Sepia</button>
-        </div>
-      </div>
-      <div>
-        <label class="text-xs text-[#8a8a8a] block mb-1.5">Font Size</label>
-        <div class="flex items-center gap-2">
-          <button onclick="adjustFontSize(-1)" class="w-8 h-8 rounded-lg bg-[#f5f3f0] hover:bg-[#e5e2dd] flex items-center justify-center text-sm">A-</button>
-          <span id="font-size-display" class="text-xs text-[#8a8a8a] flex-1 text-center">Default</span>
-          <button onclick="adjustFontSize(1)" class="w-8 h-8 rounded-lg bg-[#f5f3f0] hover:bg-[#e5e2dd] flex items-center justify-center text-sm font-bold">A+</button>
-        </div>
-      </div>
+</div>
+
+<!-- Floating Controls -->
+<div id="float-controls">
+  <button class="float-btn" id="read-mode-btn" onclick="toggleReadModal()" title="Reading Mode">📖</button>
+  <button class="float-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Top">↑</button>
+</div>
+
+<!-- Reading Mode Modal -->
+<div id="read-modal">
+  <div class="rm-row">
+    <div class="rm-label">Theme</div>
+    <div class="rm-btns">
+      <button class="rm-btn active" onclick="setTheme('light',this)">Light</button>
+      <button class="rm-btn" onclick="setTheme('dark',this)">Dark</button>
+      <button class="rm-btn" onclick="setTheme('sepia',this)">Sepia</button>
     </div>
   </div>
+  <div class="rm-row">
+    <div class="rm-label">Font Size</div>
+    <div class="rm-btns">
+      <button class="rm-btn" onclick="changeFont(-1)">A-</button>
+      <button class="rm-btn" onclick="changeFont(1)">A+</button>
+    </div>
+  </div>
+</div>
 
-  <script>
-  // Reading Mode Toggle
-  function toggleReadingMode() {
-    document.getElementById('reading-mode-modal').classList.toggle('hidden');
-  }
+<script>
+// ===== CHAPTER DATA =====
+const CHAPTERS = [{"id": "cover", "num": "", "title": "Cover", "part": ""}, {"id": "the-agi-countdown-and-humanitys-crossroads", "num": "1", "title": "The AGI Countdown and Humanity's Crossroads", "part": "I"}, {"id": "entropy-energy-efficiency", "num": "2", "title": "Entropy = Energy \u00d7 Efficiency", "part": "I"}, {"id": "the-sharp-five-dimensional-framework-moment-six-matrices-sai-ultimate-goal", "num": "3", "title": "The SHARP Five-Dimensional Framework + MOMENT Six Matrices + SAI", "part": "I"}, {"id": "s-space-the-frontier-of-spatial-computing", "num": "4", "title": "S-SPACE: The Frontier of Spatial Computing", "part": "II"}, {"id": "h-human-human-agency-technologies", "num": "5", "title": "H-HUMAN: Human Agency Technologies", "part": "II"}, {"id": "a-agent-the-agent-technology-stack", "num": "6", "title": "A-AGENT: The Agent Technology Stack", "part": "II"}, {"id": "r-robot-embodied-intelligence-technology", "num": "7", "title": "R-ROBOT: Embodied Intelligence Technology", "part": "II"}, {"id": "p-power-energy-technology-panorama", "num": "8", "title": "P-POWER: Energy Technology Panorama", "part": "II"}, {"id": "mixed-space-mixed-space-technology-stack", "num": "9", "title": "Mixed Space: Mixed Space Technology Stack", "part": "III"}, {"id": "original-space-remote-physical-space-exploration", "num": "10", "title": "Original Space: Remote Physical Space Exploration", "part": "III"}, {"id": "model-token-the-technical-encoding-of-memory", "num": "11", "title": "Model Token: The Technical Encoding of Memory", "part": "III"}, {"id": "exchange-token-the-protocol-grammar-of-memory-exchange", "num": "12", "title": "Exchange Token: The Protocol Grammar of Memory Exchange", "part": "III"}, {"id": "nuclear-power-computing-centralized-energy-for-cognition", "num": "13", "title": "Nuclear Power Computing: Centralized Energy for Cognition", "part": "III"}, {"id": "thin-film-solar-computing-distributed-energy-for-cognition", "num": "14", "title": "Thin-Film Solar Power Computing: Distributed Energy for Cognition", "part": "III"}, {"id": "chapter-15-safer-distributed-memory-system", "num": "15", "title": "SAFER \u2014 Distributed Memory System", "part": "IV"}, {"id": "chapter-16-magic-the-distributed-perception-system", "num": "16", "title": "MAGIC \u2014 Distributed Perception System", "part": "IV"}, {"id": "chapter-17-turbo-the-distributed-cognitive-energy-system", "num": "17", "title": "TURBO \u2014 Distributed Cognitive Energy System", "part": "IV"}, {"id": "chapter-18-\u03c3sai-agi_rogue-complete-architecture-and-outlook", "num": "18", "title": "\u03a3SAI > AGI_rogue: Complete Architecture and Outlook", "part": "V"}, {"id": "appendix-a-core-glossary", "num": "A", "title": "Appendix A: Core Glossary", "part": "App"}, {"id": "appendix-b-sharp-five-dimensions-moment-six-matrices-complete-mapping-table", "num": "B", "title": "Appendix B: SHARP \u00d7 MOMENT Mapping Table", "part": "App"}, {"id": "appendix-c-three-pillar-neuroscience-mapping-table", "num": "C", "title": "Appendix C: Three-Pillar Neuroscience Mapping", "part": "App"}, {"id": "appendix-d-2025-2035-technology-evolution-roadmap", "num": "D", "title": "Appendix D: 2025\u20132035 Technology Roadmap", "part": "App"}, {"id": "appendix-e-full-legal-disclaimer", "num": "E", "title": "Appendix E: Full Legal Disclaimer", "part": "App"}, {"id": "appendix-f-academic-honesty-statement", "num": "F", "title": "Appendix F: Academic Honesty Statement", "part": "App"}, {"id": "appendix-g-sai-sad-quantitative-assessment-framework", "num": "G", "title": "Appendix G: SAI-SAD Quantitative Assessment Framework", "part": "App"}];
 
-  // Theme
-  function setTheme(theme) {
-    document.body.setAttribute('data-theme', theme);
-    localStorage.setItem('sharp-theme', theme);
-    applyTheme(theme);
-  }
-  function applyTheme(theme) {
-    const body = document.body;
-    body.classList.remove('theme-light', 'theme-dark', 'theme-sepia');
-    if (theme === 'dark') {
-      body.style.backgroundColor = '#1a1a1a';
-      body.style.color = '#e0e0e0';
-    } else if (theme === 'sepia') {
-      body.style.backgroundColor = '#f4ecd8';
-      body.style.color = '#433422';
-    } else {
-      body.style.backgroundColor = '#fdfcfa';
-      body.style.color = '#1a1a1a';
-    }
-  }
-  // Restore saved theme
-  const savedTheme = localStorage.getItem('sharp-theme');
-  if (savedTheme) applyTheme(savedTheme);
+let current = 0;
+let fontSize = 0;
 
-  // Font Size
-  let fontSizeLevel = 0;
-  function adjustFontSize(delta) {
-    fontSizeLevel = Math.max(-2, Math.min(2, fontSizeLevel + delta));
-    const sizes = { '-2': '14px', '-1': '15px', '0': '17px', '1': '19px', '2': '21px' };
-    const labels = { '-2': 'Small', '-1': 'Medium', '0': 'Default', '1': 'Large', '2': 'X-Large' };
-    document.querySelector('main').style.fontSize = sizes[fontSizeLevel];
-    document.getElementById('font-size-display').textContent = labels[fontSizeLevel];
-  }
-
-  // Back to Top visibility
-  const backToTopBtn = document.getElementById('back-to-top');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 600) {
-      backToTopBtn.classList.remove('opacity-0', 'pointer-events-none');
-    } else {
-      backToTopBtn.classList.add('opacity-0', 'pointer-events-none');
-    }
+// ===== INIT =====
+function init() {
+  buildSidebar();
+  showChapter(0);
+  // Restore theme
+  const saved = localStorage.getItem('sharp-theme');
+  if (saved) { document.body.setAttribute('data-theme', saved); updateRmActive(saved); }
+  // Keyboard
+  document.addEventListener('keydown', e => {
+    if (e.target.tagName === 'INPUT') return;
+    if (e.key === 'ArrowLeft' || e.key === 'p' || e.key === 'P') goPrev();
+    if (e.key === 'ArrowRight' || e.key === 'n' || e.key === 'N') goNext();
   });
-
-  // Click outside to close modal
-  document.addEventListener('click', function(e) {
-    const modal = document.getElementById('reading-mode-modal');
-    const btn = document.getElementById('reading-mode-toggle');
-    if (!modal.contains(e.target) && e.target !== btn && !btn.contains(e.target)) {
-      modal.classList.add('hidden');
-    }
+  // Close modal on outside click
+  document.addEventListener('click', e => {
+    const m = document.getElementById('read-modal');
+    const b = document.getElementById('read-mode-btn');
+    if (!m.contains(e.target) && e.target !== b && !b.contains(e.target)) m.classList.remove('show');
   });
-  </script>
+}
+
+// ===== SIDEBAR =====
+function buildSidebar() {
+  const nav = document.getElementById('sidebar-nav');
+  let html = '';
+  let currentPart = '';
+  CHAPTERS.forEach((ch, i) => {
+    if (ch.part && ch.part !== currentPart) {
+      currentPart = ch.part;
+      const partLabels = { 'I': 'Part I: Urgency & Framework', 'II': 'Part II: Infrastructure', 'III': 'Part III: Application Technology', 'IV': 'Part IV: Three-Pillar Products', 'V': 'Part V: Conclusions', 'App': 'Appendices' };
+      html += '<div class="part-label">' + (partLabels[currentPart] || currentPart) + '</div>';
+    }
+    html += '<div class="nav-item" data-idx="' + i + '" onclick="showChapter(' + i + ')"><span class="nav-num">' + (ch.num || 'Cv') + '</span><span class="nav-title">' + ch.title + '</span></div>';
+  });
+  nav.innerHTML = html;
+}
+
+// ===== CHAPTER NAVIGATION =====
+function showChapter(idx) {
+  idx = Math.max(0, Math.min(CHAPTERS.length - 1, idx));
+  current = idx;
+  // Hide all, show current
+  document.querySelectorAll('.chapter').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+  });
+  // Scroll to top
+  document.querySelector('.content-wrap').scrollTop = 0;
+  window.scrollTo(0, 0);
+  // Update sidebar
+  document.querySelectorAll('.nav-item').forEach((el, i) => {
+    el.classList.toggle('active', i === idx);
+    if (i === idx) el.scrollIntoView({ block: 'nearest' });
+  });
+  // Update topbar
+  const ch = CHAPTERS[idx];
+  document.getElementById('topbar-title').textContent = ch.num ? 'Ch ' + ch.num : 'Cover';
+  document.getElementById('topbar-chapter').textContent = ch.title.length > 40 ? ch.title.substring(0, 40) + '...' : ch.title;
+  // Update bottom bar
+  document.getElementById('btn-prev').disabled = idx === 0;
+  document.getElementById('btn-next').disabled = idx === CHAPTERS.length - 1;
+  document.getElementById('progress-text').textContent = (idx + 1) + ' / ' + CHAPTERS.length;
+  document.getElementById('progress-fill').style.width = ((idx + 1) / CHAPTERS.length * 100) + '%';
+  // Update URL hash
+  history.replaceState(null, null, '#' + ch.id);
+  // Mobile: close sidebar
+  if (window.innerWidth < 769) {
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('show');
+  }
+}
+
+function goPrev() { if (current > 0) showChapter(current - 1); }
+function goNext() { if (current < CHAPTERS.length - 1) showChapter(current + 1); }
+
+// ===== SIDEBAR TOGGLE =====
+function toggleSidebar() {
+  const sb = document.getElementById('sidebar');
+  const ov = document.getElementById('overlay');
+  if (window.innerWidth < 769) {
+    sb.classList.toggle('open');
+    ov.classList.toggle('show');
+  } else {
+    sb.classList.toggle('collapsed');
+    document.getElementById('main-wrap').classList.toggle('expanded');
+    document.getElementById('bottombar').classList.toggle('expanded');
+  }
+}
+
+// ===== READING MODE =====
+function toggleReadModal() {
+  document.getElementById('read-modal').classList.toggle('show');
+}
+function setTheme(theme, btn) {
+  document.body.setAttribute('data-theme', theme);
+  localStorage.setItem('sharp-theme', theme);
+  if (btn) updateRmActive(theme);
+}
+function updateRmActive(theme) {
+  document.querySelectorAll('.rm-btn').forEach(b => b.classList.remove('active'));
+  const map = { 'light': 0, 'dark': 1, 'sepia': 2 };
+  const btns = document.querySelectorAll('.rm-btns:first-child .rm-btn');
+  if (btns[map[theme]]) btns[map[theme]].classList.add('active');
+}
+function changeFont(delta) {
+  fontSize = Math.max(-2, Math.min(2, fontSize + delta));
+  const sizes = { '-2': '14px', '-1': '15px', '0': '17px', '1': '19px', '2': '21px' };
+  document.querySelector('.content-wrap').style.fontSize = sizes[fontSize];
+}
+
+// ===== URL HASH =====
+function fromHash() {
+  const hash = location.hash.replace('#', '');
+  if (!hash) return;
+  const idx = CHAPTERS.findIndex(c => c.id === hash);
+  if (idx >= 0) showChapter(idx);
+}
+window.addEventListener('hashchange', fromHash);
+
+// ===== START =====
+document.addEventListener('DOMContentLoaded', () => { init(); fromHash(); });
+</script>
 
 </body>
 </html>
