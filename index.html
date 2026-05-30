@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SHARP MOMENT v9.0 — From AGI to Super Autonomous Intelligence</title>
+<title>SHARP MOMENT — From AGI to Super Autonomous Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
@@ -77,6 +77,41 @@ body{
 }
 .sidebar-nav{
   padding:12px 0;
+}
+.home-btn{
+  position:fixed;
+  bottom:24px;
+  right:24px;
+  width:44px;
+  height:44px;
+  border-radius:50%;
+  background:#fff;
+  border:1px solid var(--border);
+  box-shadow:0 2px 8px rgba(0,0,0,0.08);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  cursor:pointer;
+  z-index:100;
+  transition:all 0.2s ease;
+  text-decoration:none;
+}
+.home-btn:hover{
+  border-color:var(--accent);
+  box-shadow:0 4px 12px rgba(0,0,0,0.12);
+  transform:translateY(-2px);
+}
+.home-btn svg{
+  width:18px;
+  height:18px;
+  stroke:var(--text2);
+  fill:none;
+  stroke-width:2;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+.home-btn:hover svg{
+  stroke:var(--accent);
 }
 .nav-part{
   padding:8px 20px 4px;
@@ -365,6 +400,16 @@ li{margin-bottom:4px}
   h1{font-size:26px}
   h2{font-size:19px}
   .cover h1{font-size:30px}
+  .home-btn{
+    bottom:16px;
+    right:16px;
+    width:40px;
+    height:40px;
+  }
+  .home-btn svg{
+    width:16px;
+    height:16px;
+  }
 }
 
 /* === PANDOC HIGHLIGHTING === */
@@ -382,7 +427,7 @@ sup{line-height:0}
 <button class="mobile-toggle" id="menuBtn" onclick="toggleSidebar()" aria-label="Toggle menu">&#9776;</button>
 <aside class="sidebar" id="sidebar">
 <div class="sidebar-header">
-<div class="sidebar-title">SHARP MOMENT v9.0</div>
+<div class="sidebar-title">SHARP MOMENT</div>
 <div class="sidebar-subtitle">From AGI to Super Autonomous Intelligence</div>
 <div class="sidebar-author">Arthur Lee</div>
 </div>
@@ -963,13 +1008,17 @@ document.addEventListener('DOMContentLoaded', ()=>{
 <!-- ==================== COVER ==================== -->
 <div class="chapter active" id="ch-panel-0">
 <div class="cover">
-  <h1>SHARP MOMENT v9.0</h1>
+  <h1>SHARP MOMENT</h1>
   <p class="subtitle">From AGI to Super Autonomous Intelligence</p>
   <p class="sub2">A Brain-Inspired Technical Assessment Framework</p>
   <p class="meta"><strong>Arthur Lee</strong></p>
   <p class="meta">June 2026</p>
+  <p class="meta" style="margin-top:0.8rem;font-size:0.85rem;">
+    <a href="mailto:arthurl@sharpmoment.org">arthurl@sharpmoment.org</a> &nbsp;|&nbsp;
+    <a href="https://x.com/ArthurLeeSHARP" target="_blank" rel="noopener">x.com/ArthurLeeSHARP</a>
+  </p>
   <div style="margin-top:3rem;padding:1.5rem;background:#fafafa;border-left:3px solid var(--accent);text-align:left;font-size:0.92rem;line-height:1.6;max-width:700px;margin-left:auto;margin-right:auto;">
-    <p><strong>Abstract</strong>: This report presents SHARP MOMENT v9.0, a comprehensive brain-inspired framework for understanding and building distributed intelligent systems that can surpass centralized AGI. Covering 18 chapters across five parts — from the AGI countdown and thermodynamic foundations through the SHARP five-dimensional infrastructure, MOMENT six-matrix application layer, three-pillar neuroscience mapping (SAFER/MAGIC/TURBO), to the ultimate SAI architecture — this ~100,000-word report argues that the aggregate capability of millions of safe autonomous intelligences overwhelms any potentially rogue centralized superintelligence.</p>
+    <p><strong>Abstract</strong>: This report presents SHARP MOMENT, a comprehensive brain-inspired framework for understanding and building distributed intelligent systems that can surpass centralized AGI. Covering 18 chapters across five parts — from the AGI countdown and thermodynamic foundations through the SHARP five-dimensional infrastructure, MOMENT six-matrix application layer, three-pillar neuroscience mapping (SAFER/MAGIC/TURBO), to the ultimate SAI architecture — this ~100,000-word report argues that the aggregate capability of millions of safe autonomous intelligences overwhelms any potentially rogue centralized superintelligence.</p>
   </div>
 </div>
 </div>
@@ -18858,12 +18907,15 @@ foundation for “pay after verification.”<a class="footnote-back" href="#fnre
 
 </div><!-- /content -->
 <div class="site-footer">
-  <p>SHARP MOMENT v9.0 &mdash; Arthur Lee</p>
+  <p>SHARP MOMENT &mdash; Arthur Lee</p>
   <p>
     <a href="mailto:arthurl@sharpmoment.org">arthurl@sharpmoment.org</a> &nbsp;|&nbsp;
     <a href="https://x.com/ArthurLeeSHARP" target="_blank" rel="noopener">x.com/ArthurLeeSHARP</a>
   </p>
 </div>
+<a href="#cover" class="home-btn" title="Back to cover" aria-label="Back to cover" onclick="showCh(0);return false;">
+<svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+</a>
 </div><!-- /main -->
 </body>
 </html>
