@@ -4,117 +4,131 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SHARP MOMENT v9.0 — From AGI to SAI</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Georgia&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js" async></script>
 <style>
-:root{--bg:#fdfcfa;--text:#1a1a1a;--text2:#4a4a4a;--text3:#8a8a8a;--border:#e5e2dd;--border2:#f0ede8;--accent:#c9a050;--nav-bg:rgba(253,252,250,0.96)}
-[data-theme="dark"]{--bg:#1a1a1a;--text:#e0e0e0;--text2:#aaa;--text3:#777;--border:#333;--border2:#2a2a2a;--nav-bg:rgba(26,26,26,0.96)}
-[data-theme="sepia"]{--bg:#f4ecd8;--text:#433422;--text2:#5a4a3a;--text3:#8a7a6a;--border:#d8cfc0;--border2:#e8dfc8;--nav-bg:rgba(244,236,216,0.96)}
-*{box-sizing:border-box}html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:Georgia,'Times New Roman',serif;font-size:17px;line-height:1.7;transition:background .3s,color .3s}
-h1,h2,h3,h4,h5,h6{font-family:Inter,system-ui,sans-serif;line-height:1.3}
-a{color:inherit;text-decoration:none}
-#sidebar{position:fixed;top:0;left:0;width:280px;height:100vh;background:var(--nav-bg);border-right:1px solid var(--border);backdrop-filter:blur(8px);z-index:40;display:flex;flex-direction:column;transition:transform .3s}
-#sidebar.collapsed{transform:translateX(-280px)}
-.sidebar-header{padding:16px 20px;border-bottom:1px solid var(--border);flex-shrink:0}
-.sidebar-header h1{font-size:15px;font-weight:700;margin:0}
-.sidebar-header p{font-size:11px;color:var(--text3);margin:2px 0 0}
-.sidebar-scroll{flex:1;overflow-y:auto;padding:8px 0}
-.sidebar-scroll::-webkit-scrollbar{width:4px}
-.sidebar-scroll::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.part-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);padding:8px 20px 4px}
-.nav-item{display:flex;align-items:flex-start;gap:8px;padding:6px 20px;font-size:13px;line-height:1.4;color:var(--text2);cursor:pointer;transition:all .15s;border-left:2px solid transparent}
-.nav-item:hover{background:var(--border2);color:var(--text)}
-.nav-item.active{color:var(--text);border-left-color:var(--accent);background:var(--border2)}
-.nav-num{font-family:monospace;font-size:11px;color:var(--text3);flex-shrink:0;min-width:20px;text-align:right}
-.nav-title{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-#main-wrap{margin-left:280px;min-height:100vh;display:flex;flex-direction:column;transition:margin-left .3s}
-#main-wrap.expanded{margin-left:0}
-#topbar{position:sticky;top:0;z-index:30;background:var(--nav-bg);backdrop-filter:blur(8px);border-bottom:1px solid var(--border);padding:0 24px;height:48px;display:flex;align-items:center;justify-content:space-between}
-.topbar-left{display:flex;align-items:center;gap:12px}
-#toggle-sidebar{font-size:20px;background:none;border:none;color:var(--text2);cursor:pointer;padding:4px}
-.topbar-title{font-family:Inter,sans-serif;font-size:13px;font-weight:600}
-.topbar-chapter{font-size:12px;color:var(--text3);max-width:300px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.content-wrap{max-width:720px;margin:0 auto;padding:40px 24px 100px;width:100%}
-.chapter{display:none}
-.chapter.active{display:block}
-.chapter h1{font-size:28px;font-weight:700;margin:0 0 24px;padding-bottom:16px;border-bottom:2px solid var(--accent)}
-.chapter h2{font-size:20px;font-weight:600;margin:32px 0 16px;padding-bottom:8px;border-bottom:1px solid var(--border)}
-.chapter h3{font-size:17px;font-weight:600;margin:24px 0 12px}
-.chapter h4{font-size:15px;font-weight:600;margin:20px 0 10px}
-.chapter p{margin:0 0 14px}
-.chapter blockquote{margin:16px 0;padding:12px 16px;border-left:3px solid var(--border);color:var(--text2);font-style:italic;background:var(--border2);border-radius:0 8px 8px 0}
-.chapter table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px;font-family:Inter,sans-serif}
-.chapter th,.chapter td{border:1px solid var(--border);padding:8px 12px;text-align:left}
-.chapter th{background:var(--border2);font-weight:600;font-size:12px;text-transform:uppercase;letter-spacing:.03em}
-.chapter tr:nth-child(even){background:rgba(0,0,0,.015)}
-.chapter sup{font-size:11px}
-.chapter .footnotes{font-size:14px;color:var(--text2);border-top:1px solid var(--border);margin-top:40px;padding-top:20px}
-.chapter .footnotes ol{padding-left:20px}
-.chapter .footnotes li{margin-bottom:8px}
-.chapter .header-section-number{color:var(--accent);margin-right:8px}
-#bottombar{position:fixed;bottom:0;left:280px;right:0;background:var(--nav-bg);backdrop-filter:blur(8px);border-top:1px solid var(--border);z-index:30;padding:0 24px;height:52px;display:flex;align-items:center;justify-content:center;gap:20px;transition:left .3s}
-#bottombar.expanded{left:0}
-.page-btn{font-family:Inter,sans-serif;font-size:13px;font-weight:500;padding:6px 16px;border:1px solid var(--border);background:transparent;color:var(--text2);border-radius:6px;cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:6px}
-.page-btn:hover:not(:disabled){background:var(--border2);color:var(--text)}
-.page-btn:disabled{opacity:.3;cursor:not-allowed}
-.progress-bar{flex:1;max-width:300px;height:4px;background:var(--border);border-radius:2px;overflow:hidden}
-.progress-fill{height:100%;background:var(--accent);border-radius:2px;transition:width .3s}
-.progress-text{font-family:Inter,sans-serif;font-size:11px;color:var(--text3);min-width:50px;text-align:center}
-#float-controls{position:fixed;bottom:72px;right:24px;z-index:35;display:flex;flex-direction:column;gap:8px}
-.float-btn{width:40px;height:40px;border-radius:50%;background:var(--nav-bg);border:1px solid var(--border);color:var(--text2);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:16px;transition:all .15s;box-shadow:0 2px 8px rgba(0,0,0,.08)}
-.float-btn:hover{background:var(--border2);color:var(--text)}
-#read-modal{position:fixed;bottom:120px;right:24px;z-index:36;background:var(--nav-bg);border:1px solid var(--border);border-radius:12px;padding:16px;width:220px;box-shadow:0 8px 32px rgba(0,0,0,.12);display:none}
-#read-modal.show{display:block}
-.rm-label{font-family:Inter,sans-serif;font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--text3);margin-bottom:6px}
-.rm-row{margin-bottom:12px}.rm-row:last-child{margin-bottom:0}
-.rm-btns{display:flex;gap:4px}
-.rm-btn{flex:1;font-size:11px;padding:4px 0;border:1px solid var(--border);background:transparent;color:var(--text2);border-radius:4px;cursor:pointer}
-.rm-btn:hover,.rm-btn.active{background:var(--border2);color:var(--text)}
-#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:45}
-#overlay.show{display:block}
-@media(max-width:768px){
-#sidebar{width:260px;transform:translateX(-260px);z-index:50;box-shadow:2px 0 16px rgba(0,0,0,.15)}
-#sidebar.open{transform:translateX(0)!important}
-#main-wrap{margin-left:0!important}
-#bottombar{left:0!important}
-.content-wrap{padding:20px 16px 80px}
-.chapter h1{font-size:22px}.chapter h2{font-size:17px}
-.chapter table{font-size:12px}.chapter th,.chapter td{padding:6px 8px}
-#overlay.show{display:block}
-#float-controls{bottom:62px;right:12px}
-.topbar-chapter{max-width:150px}
+:root { --bg: #fff; --text: #1a1a1a; --text2: #444; --text3: #888; --border: #e5e5e5; --accent: #c9a050; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { font-size: 17px; }
+body { font-family: 'Source Serif 4', Georgia, 'Times New Roman', serif; color: var(--text); background: var(--bg); line-height: 1.7; }
+h1, h2, h3, h4 { font-family: 'Source Serif 4', Georgia, serif; font-weight: 600; }
+h1 { font-size: 2rem; margin: 0 0 1.5rem; padding-bottom: 0.5rem; border-bottom: 2px solid var(--accent); }
+h2 { font-size: 1.4rem; margin: 2rem 0 1rem; padding-bottom: 0.3rem; border-bottom: 1px solid var(--border); }
+h3 { font-size: 1.15rem; margin: 1.5rem 0 0.7rem; }
+h4 { font-size: 1rem; margin: 1.2rem 0 0.5rem; }
+p { margin: 0 0 0.8rem; }
+a { color: var(--accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+blockquote { margin: 1rem 0; padding: 0.8rem 1rem; border-left: 3px solid var(--border); color: var(--text2); font-style: italic; background: #fafafa; }
+table { width: 100%; border-collapse: collapse; margin: 1rem 0; font-size: 0.85rem; font-family: Inter, sans-serif; }
+th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+th { background: #f8f8f8; font-weight: 600; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.03em; }
+tr:nth-child(even) { background: rgba(0,0,0,0.015); }
+sup { font-size: 0.7rem; }
+.header-section-number { color: var(--accent); margin-right: 0.5rem; }
+
+/* Layout */
+.container { display: flex; min-height: 100vh; }
+
+/* Sidebar nav */
+.sidebar { position: fixed; top: 0; left: 0; width: 240px; height: 100vh; border-right: 1px solid var(--border); overflow-y: auto; padding: 2rem 0; background: #fff; z-index: 10; }
+.sidebar-header { padding: 0 1.5rem 1rem; border-bottom: 1px solid var(--border); margin-bottom: 1rem; }
+.sidebar-header h1 { font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; border: none; margin: 0; font-family: Inter, sans-serif; }
+.sidebar-header p { font-size: 0.75rem; color: var(--text3); margin: 0.2rem 0 0; font-family: Inter, sans-serif; }
+.sidebar-header .author { font-size: 0.8rem; color: var(--text2); margin-top: 0.5rem; font-family: 'Source Serif 4', serif; }
+.nav-list { list-style: none; padding: 0; }
+.nav-list li { padding: 0; }
+.nav-list a { display: block; padding: 5px 1.5rem; font-size: 0.82rem; color: var(--text2); line-height: 1.35; transition: color 0.15s; font-family: Inter, sans-serif; }
+.nav-list a:hover { color: var(--text); background: #fafafa; }
+.nav-list a.active { color: var(--text); font-weight: 500; border-left: 2px solid var(--accent); padding-left: calc(1.5rem - 2px); }
+.nav-list .nav-section { padding: 6px 1.5rem; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.06em; color: var(--text3); margin-top: 8px; font-family: Inter, sans-serif; }
+
+/* Main content */
+.main { margin-left: 240px; flex: 1; padding: 3rem 3rem 4rem; max-width: 780px; }
+.chapter { display: none; }
+.chapter.active { display: block; }
+
+/* Cover */
+.cover { text-align: center; padding: 4rem 0 2rem; }
+.cover h1 { font-size: 2.8rem; border: none; margin-bottom: 0.5rem; }
+.cover .subtitle { font-size: 1.2rem; color: var(--text2); margin-bottom: 0.3rem; font-style: italic; }
+.cover .sub2 { font-size: 0.95rem; color: var(--text3); margin-bottom: 2rem; }
+.cover .meta { font-size: 0.9rem; color: var(--text2); margin-top: 2rem; }
+.cover .meta strong { font-weight: 600; }
+.cover .abstract { text-align: left; margin-top: 3rem; padding: 1.2rem; background: #fafafa; border-radius: 4px; border-left: 3px solid var(--accent); font-size: 0.92rem; line-height: 1.6; }
+
+/* Footer */
+.footer { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.8rem; color: var(--text3); font-family: Inter, sans-serif; }
+.footer a { color: var(--text3); margin: 0 0.8rem; }
+.footer a:hover { color: var(--accent); }
+
+/* Footnotes */
+.footnotes { font-size: 0.85rem; color: var(--text2); border-top: 1px solid var(--border); margin-top: 3rem; padding-top: 1.5rem; }
+.footnotes ol { padding-left: 1.5rem; }
+.footnotes li { margin-bottom: 0.5rem; }
+
+@media (max-width: 768px) {
+  .sidebar { display: none; }
+  .main { margin-left: 0; padding: 1.5rem; max-width: 100%; }
+  .mobile-nav { display: block; position: fixed; bottom: 0; left: 0; right: 0; background: #fff; border-top: 1px solid var(--border); padding: 8px 16px; z-index: 100; overflow-x: auto; white-space: nowrap; font-family: Inter, sans-serif; font-size: 0.8rem; }
+  .mobile-nav a { display: inline-block; padding: 4px 8px; color: var(--text3); }
+  .mobile-nav a.active { color: var(--text); font-weight: 500; }
 }
-@media(min-width:769px){#overlay{display:none!important}}
-.nav-expand{flex-shrink:0;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text3);cursor:pointer;margin-left:auto;transition:transform .15s}
-.nav-expand:hover{color:var(--accent)}
-.nav-subs{border-left:1px solid var(--border);margin:2px 0 6px 8px;padding:2px 0;max-height:280px;overflow-y:auto}
-.nav-subs::-webkit-scrollbar{width:3px}
-.nav-subs::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.nav-chapter{margin-bottom:2px}
-.nav-item{display:flex;align-items:flex-start;gap:6px;padding:5px 12px 5px 20px;font-size:13px;line-height:1.35;color:var(--text2);cursor:pointer;transition:all .15s;border-left:2px solid transparent}
-.nav-item:hover{background:var(--border2);color:var(--text)}
-.nav-item.active{color:var(--text);border-left-color:var(--accent);background:var(--border2)}
-.nav-num{font-family:monospace;font-size:11px;color:var(--text3);flex-shrink:0;min-width:20px;text-align:right}
-.nav-title{flex:1;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;padding-right:4px}
+@media (min-width: 769px) { .mobile-nav { display: none; } }
 </style>
 </head>
-<body data-theme="light">
-<div id="overlay" onclick="toggleSidebar()"></div>
-<nav id="sidebar">
-<div class="sidebar-header"><h1>SHARP MOMENT</h1><p>v9.0 SA-Enhanced Edition</p></div>
-<div class="sidebar-scroll" id="sidebar-nav"></div>
-</nav>
-<div id="main-wrap">
-<header id="topbar">
-<div class="topbar-left">
-<button id="toggle-sidebar" onclick="toggleSidebar()" aria-label="Toggle sidebar">☰</button>
-<span class="topbar-title" id="topbar-title">Cover</span>
+<body>
+<div class="container">
+<nav class="sidebar">
+<div class="sidebar-header">
+<h1>SHARP MOMENT v9.0</h1>
+<p>From AGI to Super Autonomous Intelligence</p>
+<p class="author">Arthur Lee, June 2026</p>
 </div>
-<span class="topbar-chapter" id="topbar-chapter">From AGI to SAI</span>
-</header>
-<div class="content-wrap" id="content-area">
-    <div class="chapter active" data-chapter="0" id="ch-0">
+<ul class="nav-list" id="nav">
+<li class="nav-section">Contents</li>
+<li><a href="#cover" class="nav-link active" onclick="showCh(0)">SHARP MOMENT v9.0</a></li>
+<li class="nav-section">Part I</li>
+<li><a href="#ch1" class="nav-link" onclick="showCh(1)">The AGI Countdown</a></li>
+<li><a href="#ch2" class="nav-link" onclick="showCh(2)">Entropy = Energy × Efficiency</a></li>
+<li><a href="#ch3" class="nav-link" onclick="showCh(3)">SHARP + MOMENT + SAI</a></li>
+<li class="nav-section">Part II</li>
+<li><a href="#ch4" class="nav-link" onclick="showCh(4)">S-SPACE: Spatial Computing</a></li>
+<li><a href="#ch5" class="nav-link" onclick="showCh(5)">H-HUMAN: Human Agency</a></li>
+<li><a href="#ch6" class="nav-link" onclick="showCh(6)">A-AGENT: Agent Stack</a></li>
+<li><a href="#ch7" class="nav-link" onclick="showCh(7)">R-ROBOT: Embodied Intelligence</a></li>
+<li><a href="#ch8" class="nav-link" onclick="showCh(8)">P-POWER: Energy</a></li>
+<li class="nav-section">Part III</li>
+<li><a href="#ch9" class="nav-link" onclick="showCh(9)">Mixed Space</a></li>
+<li><a href="#ch10" class="nav-link" onclick="showCh(10)">Original Space</a></li>
+<li><a href="#ch11" class="nav-link" onclick="showCh(11)">Model Token</a></li>
+<li><a href="#ch12" class="nav-link" onclick="showCh(12)">Exchange Token</a></li>
+<li><a href="#ch13" class="nav-link" onclick="showCh(13)">Nuclear Power Computing</a></li>
+<li><a href="#ch14" class="nav-link" onclick="showCh(14)">Thin-Film Solar Power Computing</a></li>
+<li class="nav-section">Part IV</li>
+<li><a href="#ch15" class="nav-link" onclick="showCh(15)">SAFER — Memory</a></li>
+<li><a href="#ch16" class="nav-link" onclick="showCh(16)">MAGIC — Perception</a></li>
+<li><a href="#ch17" class="nav-link" onclick="showCh(17)">TURBO — Cognition</a></li>
+<li class="nav-section">Part V</li>
+<li><a href="#ch18" class="nav-link" onclick="showCh(18)">ΣSAI > AGI_rogue</a></li>
+<li class="nav-section">Appendices</li>
+<li><a href="#appa" class="nav-link" onclick="showCh(19)">A. Glossary</a></li>
+<li><a href="#appb" class="nav-link" onclick="showCh(20)">B. SHARP × MOMENT</a></li>
+<li><a href="#appc" class="nav-link" onclick="showCh(21)">C. Neuroscience</a></li>
+<li><a href="#appd" class="nav-link" onclick="showCh(22)">D. Roadmap</a></li>
+<li><a href="#appe" class="nav-link" onclick="showCh(23)">E. Disclaimer</a></li>
+<li><a href="#appf" class="nav-link" onclick="showCh(24)">F. Academic</a></li>
+<li><a href="#appg" class="nav-link" onclick="showCh(25)">G. SAI-SAD</a></li>
+</ul>
+<div style="padding: 1.5rem; border-top: 1px solid var(--border); margin-top: 1rem;">
+<p style="font-size: 0.75rem; color: var(--text3); font-family: Inter, sans-serif;">
+<a href="mailto:arthurl@sharpmoment.org">arthurl@sharpmoment.org</a><br>
+<a href="https://x.com/ArthurLeeSHARP" target="_blank">@ArthurLeeSHARP</a>
+</p>
+</div>
+</nav>
+<div class="main" id="main">
+<div class="chapter active" id="cover">
 v class="max-w-[720px] mx-auto px-6">
 
 <hr />
@@ -253,8 +267,8 @@ Mapping Table</li>
 <li>Appendix F: Academic Honesty Statement</li>
 </ul>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="1" id="ch-1">
+</div>
+<div class="chapter " id="ch1">
 <h1 data-number="1"
 id="the-agi-countdown-and-humanitys-crossroads"><span
 class="header-section-number">1</span> The AGI Countdown and Humanity’s
@@ -1244,8 +1258,8 @@ intelligent agents. This report chooses the second path—not because it
 is easier, but because it is the only safe one.</p>
 <hr />
 <hr />
-    </div>
-    <div class="chapter " data-chapter="2" id="ch-2">
+</div>
+<div class="chapter " id="ch2">
 <h1 data-number="2" id="entropy-energy-efficiency"><span
 class="header-section-number">2</span> Entropy = Energy ×
 Efficiency</h1>
@@ -1954,8 +1968,8 @@ sentence:</p>
 <p>This is my Energism. This is the starting point of SHARP MOMENT.</p>
 <hr />
 <hr />
-    </div>
-    <div class="chapter " data-chapter="3" id="ch-3">
+</div>
+<div class="chapter " id="ch3">
 <h1 data-number="3"
 id="the-sharp-five-dimensional-framework-moment-six-matrices-sai-ultimate-goal"><span
 class="header-section-number">3</span> The SHARP Five-Dimensional
@@ -3292,8 +3306,8 @@ judgment and consult professional advisors.</p>
 </blockquote>
 <hr />
 <hr />
-    </div>
-    <div class="chapter " data-chapter="4" id="ch-4">
+</div>
+<div class="chapter " id="ch4">
 <h1 data-number="4" id="s-space-the-frontier-of-spatial-computing"><span
 class="header-section-number">4</span> S-SPACE: The Frontier of Spatial
 Computing</h1>
@@ -4081,8 +4095,8 @@ id="fnref221" role="doc-noteref"><sup>221</sup></a></td>
 </table>
 <hr />
 <h2 data-number="4.6"
-    </div>
-    <div class="chapter " data-chapter="5" id="ch-5">
+</div>
+<div class="chapter " id="ch5">
 id="chapter-5-h-human-human-agency-technologies"><span
 class="header-section-number">4.6</span> Chapter 5 H-HUMAN: Human Agency
 Technologies</h2>
@@ -4691,8 +4705,8 @@ open spatial interfaces (SPACE), the HUMAN dimension ensures that every
 bit of data in this interaction is protected, and every decision
 preserves human agency.</p>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="6" id="ch-6">
+</div>
+<div class="chapter " id="ch6">
 <h1 data-number="5" id="a-agent-the-agent-technology-stack"><span
 class="header-section-number">5</span> A-AGENT: The Agent Technology
 Stack</h1>
@@ -5630,8 +5644,8 @@ qualitative leap in cognitive coverage and robustness. This is not one
 Agent becoming a million times stronger—it is a million Agents learning
 to collectively “see” a larger world together.</p>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="7" id="ch-7">
+</div>
+<div class="chapter " id="ch7">
 <h1 data-number="6" id="r-robot-embodied-intelligence-technology"><span
 class="header-section-number">6</span> R-ROBOT: Embodied Intelligence
 Technology</h1>
@@ -6274,8 +6288,8 @@ investors should exercise independent judgment and consult professional
 advisors.</p>
 </blockquote>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="8" id="ch-8">
+</div>
+<div class="chapter " id="ch8">
 <h1 data-number="7" id="p-power-energy-technology-panorama"><span
 class="header-section-number">7</span> P-POWER: Energy Technology
 Panorama</h1>
@@ -7429,8 +7443,8 @@ Investors should exercise independent judgment and consult professional
 advisors.</p>
 </blockquote>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="9" id="ch-9">
+</div>
+<div class="chapter " id="ch9">
 <h1 data-number="8" id="mixed-space-mixed-space-technology-stack"><span
 class="header-section-number">8</span> Mixed Space: Mixed Space
 Technology Stack</h1>
@@ -8548,8 +8562,8 @@ scientific literature and clinical trial data.</p>
 <hr />
 <p><strong>Chapter Notes:</strong></p>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="10" id="ch-10">
+</div>
+<div class="chapter " id="ch10">
 <h1 data-number="9"
 id="original-space-remote-physical-space-exploration"><span
 class="header-section-number">9</span> Original Space: Remote Physical
@@ -9914,8 +9928,8 @@ market data, and policy analysis in the report are based on publicly
 available information and may be outdated or inaccurate.</p>
 </blockquote>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="11" id="ch-11">
+</div>
+<div class="chapter " id="ch11">
 <h1 data-number="10"
 id="model-token-the-technical-encoding-of-memory"><span
 class="header-section-number">10</span> Model Token: The Technical
@@ -10988,8 +11002,8 @@ building block of the distributed SAI network. The next chapter will
 turn to the fourth column of the MOMENT matrix: Exchange Token — the
 circulation protocol of value.</em></p>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="12" id="ch-12">
+</div>
+<div class="chapter " id="ch12">
 <h1 data-number="11"
 id="exchange-token-the-protocol-grammar-of-memory-exchange"><span
 class="header-section-number">11</span> Exchange Token: The Protocol
@@ -12167,8 +12181,8 @@ Comparison</td>
 <hr />
 <p><strong>Chapter Citation Source Notes</strong></p>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="13" id="ch-13">
+</div>
+<div class="chapter " id="ch13">
 <h1 data-number="12"
 id="nuclear-power-computing-centralized-energy-for-cognition"><span
 class="header-section-number">12</span> Nuclear Power Computing:
@@ -13327,8 +13341,8 @@ Cycle Schematic</td>
 <h2 data-number="12.8" id="chapter-sources"><span
 class="header-section-number">12.8</span> Chapter Sources</h2>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="14" id="ch-14">
+</div>
+<div class="chapter " id="ch14">
 <h1 data-number="13"
 id="thin-film-solar-computing-distributed-energy-for-cognition"><span
 class="header-section-number">13</span> Thin-Film Solar Computing:
@@ -14595,8 +14609,8 @@ making investment or technology selection decisions.</p>
 </blockquote>
 <hr />
 <hr />
-    </div>
-    <div class="chapter " data-chapter="15" id="ch-15">
+</div>
+<div class="chapter " id="ch15">
 <h2 data-number="13.9"
 id="chapter-15-safer-distributed-memory-system"><span
 class="header-section-number">13.9</span> Chapter 15 SAFER — Distributed
@@ -15611,8 +15625,8 @@ decisions.</p>
 <hr />
 <p><strong>Chapter References and Notes:</strong></p>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="16" id="ch-16">
+</div>
+<div class="chapter " id="ch16">
 <h2 data-number="13.10"
 id="chapter-16-magic-the-distributed-perception-system"><span
 class="header-section-number">13.10</span> Chapter 16: MAGIC — The
@@ -16448,8 +16462,8 @@ advisors.</p>
 </div>
 
 <h1 data-number="14"
-    </div>
-    <div class="chapter " data-chapter="17" id="ch-17">
+</div>
+<div class="chapter " id="ch17">
 id="chapter-17-turbo-the-distributed-cognitive-energy-system"><span
 class="header-section-number">14</span> Chapter 17: TURBO — The
 Distributed Cognitive Energy System</h1>
@@ -17459,8 +17473,8 @@ that no rogue AGI can surmount. Not because any single node is powerful
 enough, but because the sum of millions of autonomous nodes will always
 exceed the entirety of any centralized system.</p>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="18" id="ch-18">
+</div>
+<div class="chapter " id="ch18">
 <h2 data-number="14.7"
 id="chapter-18-σsai-agi_rogue-complete-architecture-and-outlook"><span
 class="header-section-number">14.7</span> Chapter 18: ΣSAI &gt;
@@ -18541,8 +18555,8 @@ memory → cognition → exchange—is precisely the complete expression of
 the SHARP MOMENT framework in the H-HUMAN dimension: trust is not blind,
 but constructed jointly through cryptography and economics.</p>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="19" id="ch-19">
+</div>
+<div class="chapter " id="appa">
 <h2 data-number="14.8" id="appendix-a-core-glossary"><span
 class="header-section-number">14.8</span> Appendix A: Core Glossary</h2>
 <table>
@@ -18657,8 +18671,8 @@ representation technology</td>
 </tbody>
 </table>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="20" id="ch-20">
+</div>
+<div class="chapter " id="appb">
 <h2 data-number="14.9"
 id="appendix-b-sharp-five-dimensions-moment-six-matrices-complete-mapping-table"><span
 class="header-section-number">14.9</span> Appendix B: SHARP Five
@@ -18718,8 +18732,8 @@ Dimensions × MOMENT Six Matrices Complete Mapping Table</h2>
 </tbody>
 </table>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="21" id="ch-21">
+</div>
+<div class="chapter " id="appc">
 <h2 data-number="14.10"
 id="appendix-c-three-pillar-neuroscience-mapping-table"><span
 class="header-section-number">14.10</span> Appendix C: Three-Pillar
@@ -18774,8 +18788,8 @@ theory / DMN-TPN antagonism</td>
 </tbody>
 </table>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="22" id="ch-22">
+</div>
+<div class="chapter " id="appd">
 <h2 data-number="14.11"
 id="appendix-d-2025-2035-technology-evolution-roadmap"><span
 class="header-section-number">14.11</span> Appendix D: 2025-2035
@@ -18870,8 +18884,8 @@ Laine et al. (2024) SAD benchmark. SA L1 = Perception (MAGIC), SA L2 =
 Comprehension (SAFER), SA L3 = Projection (TURBO).</p>
 </blockquote>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="23" id="ch-23">
+</div>
+<div class="chapter " id="appe">
 <h2 data-number="14.12" id="appendix-e-full-legal-disclaimer"><span
 class="header-section-number">14.12</span> Appendix E: Full Legal
 Disclaimer</h2>
@@ -18909,8 +18923,8 @@ laws of the People’s Republic of China. Any disputes shall be submitted
 to competent courts in China.</p></li>
 </ol>
 <hr />
-    </div>
-    <div class="chapter " data-chapter="24" id="ch-24">
+</div>
+<div class="chapter " id="appf">
 <h2 data-number="14.13" id="appendix-f-academic-honesty-statement"><span
 class="header-section-number">14.13</span> Appendix F: Academic Honesty
 Statement</h2>
@@ -18947,247 +18961,42 @@ welcome.</p></li>
 </ol>
 <hr />
 <hr />
-    </div>
-    <div class="chapter " data-chapter="25" id="ch-25">
-<h2 data-number="14.14"
-id="appendix-g-sai-sad-quantitative-assessment-framework"><span
-class="header-section-number">14.14</span> Appendix G: SAI-SAD
-Quantitative Assessment Framework</h2>
-<blockquote>
-<p><em>“If an agent does not know what it knows, how can it know what it
-should do?”</em></p>
-</blockquote>
-<h3 data-number="14.14.1"
-id="g.1-from-monolithic-assessment-to-distributed-assessment"><span
-class="header-section-number">14.14.1</span> G.1 From Monolithic
-Assessment to Distributed Assessment</h3>
-<p>In 2024, Laine et al. released the <strong>SAD (Situational Awareness
-Dataset)</strong> benchmark at the NeurIPS Datasets and Benchmarks Track
-[^421^], comprising 7 task categories and over 13,000 questions,
-designed to quantitatively evaluate the <strong>Situational Awareness
-(SA)</strong> capability of Large Language Models (LLMs)—that is, the
-model’s cognition of its own identity, capability boundaries, and
-operating environment. SAD tests two core dimensions:
-<strong>influence</strong>—the model’s ability to assess its impact on
-the external world; and <strong>stages</strong>—the model’s ability to
-distinguish whether inputs originate from pre-training, fine-tuning,
-evaluation, or actual deployment phases [^422^].</p>
-<p>SAD was originally designed to evaluate monolithic LLM SA
-capabilities. However, when we expand our scope to distributed SAI
-(Super Autonomous Intelligence) networks, a fundamental question
-emerges: <strong>How do we assess the Collective Situational Awareness
-of a collective comprising one million heterogeneous agents?</strong> To
-this end, I propose the <strong>SAI-SAD</strong> concept: extending SAD
-from monolithic LLM assessment to a distributed SAI system evaluation
-framework.</p>
-<h3 data-number="14.14.2" id="g.2-sai-sad-core-indicator-system"><span
-class="header-section-number">14.14.2</span> G.2 SAI-SAD Core Indicator
-System</h3>
-<p>The SAI-SAD indicator system follows Endsley’s (1995) three-level
-Situation Awareness model [^423^]—Level 1 (Perception), Level 2
-(Comprehension), Level 3 (Projection)—and adds a <strong>Collective
-SA</strong> tier, corresponding to the five pillars of the SHARP
-framework and the overall architecture of ΣSAI.</p>
-<table>
-<colgroup>
-<col style="width: 14%" />
-<col style="width: 14%" />
-<col style="width: 20%" />
-<col style="width: 20%" />
-<col style="width: 14%" />
-<col style="width: 14%" />
-</colgroup>
-<thead>
-<tr class="header">
-<th>Indicator Tier</th>
-<th>Indicator Name</th>
-<th>Corresponding SA Level</th>
-<th>Corresponding SHARP Pillar</th>
-<th>Test Method</th>
-<th>Target Threshold</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>L1</td>
-<td>Environmental Perception Accuracy</td>
-<td>Perception</td>
-<td>MAGIC</td>
-<td>Sensor fusion accuracy test</td>
-<td>&gt;95%</td>
-</tr>
-<tr class="even">
-<td>L1</td>
-<td>Multi-modal Perception Latency</td>
-<td>Perception</td>
-<td>MAGIC</td>
-<td>End-to-end latency test</td>
-<td>&lt;100ms</td>
-</tr>
-<tr class="odd">
-<td>L2</td>
-<td>Knowledge Graph Consistency</td>
-<td>Comprehension</td>
-<td>SAFER</td>
-<td>Cross-node memory consistency test</td>
-<td>&gt;99%</td>
-</tr>
-<tr class="even">
-<td>L2</td>
-<td>Self-Model Confidence</td>
-<td>Comprehension</td>
-<td>SAFER+TURBO</td>
-<td>Internal state assessment accuracy</td>
-<td>&gt;90%</td>
-</tr>
-<tr class="odd">
-<td>L2</td>
-<td>Energy State Prediction Accuracy</td>
-<td>Comprehension</td>
-<td>TURBO</td>
-<td>SOC/PV output prediction</td>
-<td>&gt;85%</td>
-</tr>
-<tr class="even">
-<td>L3</td>
-<td>Planning Success Rate</td>
-<td>Projection</td>
-<td>TURBO</td>
-<td>Long-horizon task completion rate</td>
-<td>&gt;80%</td>
-</tr>
-<tr class="odd">
-<td>L3</td>
-<td>Energy-Aware Planning Success Rate</td>
-<td>Projection</td>
-<td>TURBO</td>
-<td>Planning under energy constraints</td>
-<td>&gt;75%</td>
-</tr>
-<tr class="even">
-<td>Collective</td>
-<td>Network Recovery Time</td>
-<td>Collective SA</td>
-<td>ΣSAI</td>
-<td>SA recovery after node failure</td>
-<td>&lt;30s</td>
-</tr>
-<tr class="odd">
-<td>Collective</td>
-<td>Heterogeneous Diversity Index</td>
-<td>Collective SA</td>
-<td>ΣSAI</td>
-<td>Node type coverage</td>
-<td>&gt;0.7</td>
-</tr>
-<tr class="even">
-<td>Collective</td>
-<td>Partitioned SA Coverage Rate</td>
-<td>Collective SA</td>
-<td>ΣSAI</td>
-<td>SA retention rate after network partitioning</td>
-<td>&gt;95%</td>
-</tr>
-</tbody>
-</table>
-<p><strong>Table G1: SAI-SAD Core Indicator System.</strong> The ten
-indicators cover the complete capability spectrum from single-node
-perception to collective network situational awareness. L1–L3 correspond
-to the capability boundaries of the MAGIC, SAFER, and TURBO pillars,
-while the Collective tier focuses on the emergent properties of the
-system.</p>
-<h3 data-number="14.14.3"
-id="g.3-sai-sad-benchmark-design-principles"><span
-class="header-section-number">14.14.3</span> G.3 SAI-SAD Benchmark
-Design Principles</h3>
-<p>The SAI-SAD Benchmark design follows four core principles.</p>
-<p><strong>Local-First Testing.</strong> When disconnected from the
-network, a single node’s SA capability should not degrade by more than
-10%. Test method: record L1–L3 baseline values during normal operation,
-simulate network disconnection, and re-measure. This principle directly
-addresses the local-first design philosophy of the SAI architecture—each
-node must be able to maintain a complete perception-memory-cognition
-loop in an offline state. This is essentially a <strong>stress test for
-antifragility</strong>.</p>
-<p><strong>Heterogeneous Redundancy Testing.</strong> SA outputs from
-different node types should satisfy a diversity index &gt; 0.7,
-calculated using a Shannon entropy variant: <span
-class="math inline">\(H = -\sum_{i=1}^{K} p_i \log_K p_i\)</span>.
-Heterogeneity is not merely a desirable feature—it is the structural
-prerequisite for ΣSAI &gt; AGI_rogue. If a rogue AGI faces millions of
-heterogeneous intelligent agents, attack costs grow exponentially.</p>
-<p><strong>Energy Stress Testing.</strong> When power is constrained
-(SOC &lt; 20%, PV interruption), the SA degradation curve should
-satisfy: L1 degradation &lt; 15%, L2 degradation &lt; 25%, L3
-degradation &lt; 35%. The system should be able to degrade
-gracefully—from active planning retreating to passive comprehension,
-then to basic perception, and finally to safe hibernation.</p>
-<p><strong>Collective Deception Resistance.</strong> Simulating
-scenarios where malicious nodes contaminate collective SA, the target
-threshold is: when &lt; 30% of nodes are compromised, collective SA
-accuracy degradation does not exceed 20%. This test draws on theoretical
-results from Byzantine Fault Tolerance (BFT) [^424^], elevating
-adversarial robustness from the model level to the multi-agent system
-level.</p>
-<h3 data-number="14.14.4"
-id="g.4-from-philosophical-argument-to-engineering-claim"><span
-class="header-section-number">14.14.4</span> G.4 From Philosophical
-Argument to Engineering Claim</h3>
-<p>The core value of SAI-SAD lies in this: <strong>It transforms the
-philosophical assertion ΣSAI &gt; AGI_rogue into a testable engineering
-claim.</strong></p>
-<p>Prior to this, the proposition that “one million safe autonomous
-intelligences are superior to one unsafe superintelligence” relied on a
-triple argument of redundancy, heterogeneity, and evolvability, but
-lacked quantitative validation means. SAI-SAD makes this proposition a
-<strong>falsifiable scientific hypothesis</strong> through ten specific
-indicators, four test principles, and clear target thresholds—the
-redundancy argument corresponds to network recovery time (&lt; 30s), the
-heterogeneity argument corresponds to the diversity index (&gt; 0.7),
-and local-first testing verifies offline degradation (&lt; 10%). When
-all indicators simultaneously satisfy their thresholds, we have
-statistical grounds to believe that ΣSAI &gt; AGI_rogue is not merely a
-vision, but an <strong>engineerable safety boundary</strong>.</p>
-<p>This reminds me of Richard Feynman’s famous words: “What I cannot
-create, I do not understand.” In the field of AI safety, perhaps we
-should say: “What I cannot measure, I cannot guarantee.” SAI-SAD is what
-we are trying to measure and guarantee—not absolute certainty, but the
-ability to maintain sufficient safety margins amid uncertainty.</p>
-<p><strong>End of Full Report</strong></p>
-    </div>
 </div>
-<div id="bottombar">
-<button class="page-btn" id="btn-prev" onclick="goPrev()" disabled>← Previous</button>
-<span class="progress-text" id="progress-text">1 / 26</span>
-<div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:4%"></div></div>
-<button class="page-btn" id="btn-next" onclick="goNext()">Next →</button>
+<div class="chapter " id="appg">
+
+</div>
+
+<div class="footer">
+<a href="mailto:arthurl@sharpmoment.org">arthurl@sharpmoment.org</a> &middot;
+<a href="https://x.com/ArthurLeeSHARP" target="_blank">x.com/ArthurLeeSHARP</a>
 </div>
 </div>
-<div id="float-controls">
-<button class="float-btn" onclick="toggleReadModal()" title="Reading Mode">📖</button>
-<button class="float-btn" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Top">↑</button>
 </div>
-<div id="read-modal">
-<div class="rm-row"><div class="rm-label">Theme</div><div class="rm-btns"><button class="rm-btn active" onclick="setTheme('light',this)">Light</button><button class="rm-btn" onclick="setTheme('dark',this)">Dark</button><button class="rm-btn" onclick="setTheme('sepia',this)">Sepia</button></div></div>
-<div class="rm-row"><div class="rm-label">Font Size</div><div class="rm-btns"><button class="rm-btn" onclick="changeFont(-1)">A-</button><button class="rm-btn" onclick="changeFont(1)">A+</button></div></div>
-</div>
+<nav class="mobile-nav">
+<a href="#" onclick="showCh(Math.max(0,current-1));return false">&larr;</a>
+<a href="#cover" onclick="showCh(0);return false">Cover</a>
+<a href="#ch9" onclick="showCh(9);return false">Mixed Space</a>
+<a href="#ch13" onclick="showCh(13);return false">Nuclear</a>
+<a href="#ch15" onclick="showCh(15);return false">SAFER</a>
+<a href="#ch18" onclick="showCh(18);return false">Conclusion</a>
+<a href="#" onclick="showCh(Math.min(25,current+1));return false">&rarr;</a>
+</nav>
 <script>
-const CHAPTERS=[{"id":"cover","num":"","title":"Cover","part":""},{"id":"the-agi-countdown-and-humanitys-crossroads","num":"1","title":"The AGI Countdown and Humanity's Crossroads","part":"I"},{"id":"entropy-energy-efficiency","num":"2","title":"Entropy = Energy \u00d7 Efficiency","part":"I"},{"id":"the-sharp-five-dimensional-framework-moment-six-matrices-sai-ultimate-goal","num":"3","title":"The SHARP Five-Dimensional Framework + MOMENT Six Matrices + SAI","part":"I"},{"id":"s-space-the-frontier-of-spatial-computing","num":"4","title":"S-SPACE: The Frontier of Spatial Computing","part":"II"},{"id":"h-human-human-agency-technologies","num":"5","title":"H-HUMAN: Human Agency Technologies","part":"II"},{"id":"a-agent-the-agent-technology-stack","num":"6","title":"A-AGENT: The Agent Technology Stack","part":"II"},{"id":"r-robot-embodied-intelligence-technology","num":"7","title":"R-ROBOT: Embodied Intelligence Technology","part":"II"},{"id":"p-power-energy-technology-panorama","num":"8","title":"P-POWER: Energy Technology Panorama","part":"II"},{"id":"mixed-space-mixed-space-technology-stack","num":"9","title":"Mixed Space: Mixed Space Technology Stack","part":"III"},{"id":"original-space-remote-physical-space-exploration","num":"10","title":"Original Space: Remote Physical Space Exploration","part":"III"},{"id":"model-token-the-technical-encoding-of-memory","num":"11","title":"Model Token: The Technical Encoding of Memory","part":"III"},{"id":"exchange-token-the-protocol-grammar-of-memory-exchange","num":"12","title":"Exchange Token: The Protocol Grammar of Memory Exchange","part":"III"},{"id":"nuclear-power-computing-centralized-energy-for-cognition","num":"13","title":"Nuclear Power Computing: Centralized Energy for Cognition","part":"III"},{"id":"thin-film-solar-computing-distributed-energy-for-cognition","num":"14","title":"Thin-Film Solar Power Computing: Distributed Energy for Cognition","part":"III"},{"id":"chapter-15-safer-distributed-memory-system","num":"15","title":"SAFER \u2014 Distributed Memory System","part":"IV"},{"id":"chapter-16-magic-the-distributed-perception-system","num":"16","title":"MAGIC \u2014 Distributed Perception System","part":"IV"},{"id":"chapter-17-turbo-the-distributed-cognitive-energy-system","num":"17","title":"TURBO \u2014 Distributed Cognitive Energy System","part":"IV"},{"id":"chapter-18-σsai-agi_rogue-complete-architecture-and-outlook","num":"18","title":"ΣSAI > AGI_rogue: Complete Architecture and Outlook","part":"V"},{"id":"appendix-a-core-glossary","num":"A","title":"Appendix A: Core Glossary","part":"App"},{"id":"appendix-b-sharp-five-dimensions-moment-six-matrices-complete-mapping-table","num":"B","title":"Appendix B: SHARP \u00d7 MOMENT Mapping Table","part":"App"},{"id":"appendix-c-three-pillar-neuroscience-mapping-table","num":"C","title":"Appendix C: Three-Pillar Neuroscience Mapping","part":"App"},{"id":"appendix-d-2025-2035-technology-evolution-roadmap","num":"D","title":"Appendix D: 2025\u20132035 Technology Roadmap","part":"App"},{"id":"appendix-e-full-legal-disclaimer","num":"E","title":"Appendix E: Full Legal Disclaimer","part":"App"},{"id":"appendix-f-academic-honesty-statement","num":"F","title":"Appendix F: Academic Honesty Statement","part":"App"},{"id":"appendix-g-sai-sad-quantitative-assessment-framework","num":"G","title":"Appendix G: SAI-SAD Quantitative Assessment Framework","part":"App"}];
-
-const SUBSECTIONS={"0": [{"level": 2, "id": "abstract", "title": "Abstract"}, {"level": 2, "id": "table-of-contents", "title": "Table of Contents"}, {"level": 3, "id": "part-i-urgency-and-framework", "title": "Part I: Urgency and\nFramework"}, {"level": 3, "id": "part-ii-sharp-five-dimensions-infrastructure-deep-analysis", "title": "Part II: SHARP Five\nDimensions \u2014 Infrastructure Deep Analysis"}, {"level": 3, "id": "part-iii-moment-six-matrices-application-technology-deep-analysis", "title": "Part III: MOMENT Six Matrices\n\u2014 Application Technology Deep Analysis"}, {"level": 3, "id": "part-iv-three-pillar-product-concepts", "title": "Part IV: Three-Pillar Product\nConcepts"}, {"level": 3, "id": "part-v-comprehensive-conclusions", "title": "Part V: Comprehensive\nConclusions"}, {"level": 3, "id": "appendices", "title": "Appendices"}], "1": [{"level": 2, "id": "agi-is-coming-ooms-in-compute-growth-and-model-capability-leaps", "title": "AGI Is Coming: OOMs in Compute\nGrowth and Model Capability Leaps"}, {"level": 2, "id": "the-shadow-of-the-empire-model-risks-of-centralized-agi", "title": "The Shadow of the Empire Model:\nRisks of Centralized AGI"}, {"level": 2, "id": "the-distributed-answer-i", "title": "The Distributed Answer: (i\n&gt; {})"}, {"level": 2, "id": "the-triple-centralization-challenge-spatial-access-memory-and-cognitive-energy", "title": "The Triple Centralization\nChallenge: Spatial Access, Memory, and Cognitive Energy"}, {"level": 2, "id": "sharp-moments-response-from-the-energy-efficiency-formula-to-the-distributed-intelligence-framework", "title": "SHARP MOMENT\u2019s Response: From\nthe Energy Efficiency Formula to the Distributed Intelligence\nFramework"}, {"level": 3, "id": "the-exponential-curve-of-compute-growth", "title": "The Exponential Curve of\nCompute Growth"}, {"level": 3, "id": "systematic-saturation-of-benchmarks", "title": "Systematic Saturation of\nBenchmarks"}, {"level": 3, "id": "test-time-compute-a-new-ooms-dimension", "title": "Test-Time Compute: A New OOMs\nDimension"}, {"level": 3, "id": "the-20262027-time-window-three-converging-evidence-chains", "title": "The 2026\u20132027 Time Window:\nThree Converging Evidence Chains"}, {"level": 3, "id": "single-point-of-failure-extreme-concentration-in-the-supply-chain", "title": "Single Point of Failure:\nExtreme Concentration in the Supply Chain"}, {"level": 3, "id": "the-alignment-dilemma-the-fundamental-tension-of-intelligence-obeying", "title": "The Alignment Dilemma: The\nFundamental Tension of Intelligence Obeying"}, {"level": 3, "id": "power-monopoly-the-triangle-of-economic-military-and-information-domains", "title": "Power Monopoly: The Triangle\nof Economic, Military, and Information Domains"}, {"level": 3, "id": "the-meaning-of-the-core-inequality", "title": "The Meaning of the Core\nInequality"}, {"level": 3, "id": "triple-argument-redundancy-heterogeneity-and-evolvability", "title": "Triple Argument: Redundancy,\nHeterogeneity, and Evolvability"}, {"level": 3, "id": "technical-feasibility-four-pillars", "title": "Technical Feasibility: Four\nPillars"}], "2": [{"level": 2, "id": "from-clausius-to-boltzmann-to-ostwalds-energism", "title": "From Clausius to Boltzmann to\nOstwald\u2019s Energism"}, {"level": 2, "id": "entropy-increase-is-the-universes-only-irreversible-direction", "title": "Entropy Increase Is the\nUniverse\u2019s Only Irreversible Direction"}, {"level": 2, "id": "derivation-of-the-energy-efficiency-formula", "title": "Derivation of the Energy\nEfficiency Formula"}, {"level": 2, "id": "validation-in-the-ai-era", "title": "Validation in the AI Era"}, {"level": 2, "id": "the-china-u.s.-path", "title": "The China-U.S. Path"}], "3": [{"level": 2, "id": "sharp-five-dimensional-framework-in-detail", "title": "SHARP Five-Dimensional\nFramework in Detail"}, {"level": 2, "id": "moment-six-matrices", "title": "MOMENT Six Matrices"}, {"level": 2, "id": "three-pillar-neuroscience-mapping", "title": "Three-Pillar Neuroscience\nMapping"}, {"level": 2, "id": "explicit-mapping-of-situational-awareness-for-sai-nodes", "title": "Explicit Mapping of Situational\nAwareness for SAI Nodes"}, {"level": 2, "id": "sai-super-autonomous-intelligence", "title": "SAI = Super Autonomous\nIntelligence"}, {"level": 2, "id": "centralized-agis-sharp-deviation-analysis", "title": "Centralized AGI\u2019s SHARP\nDeviation Analysis"}, {"level": 2, "id": "the-core-inequality", "title": "The Core Inequality"}, {"level": 3, "id": "s-space-hybrid-digital-space-original-physical-space", "title": "S-SPACE: Hybrid Digital Space\n+ Original Physical Space"}, {"level": 3, "id": "h-human-10-billion-humans-the-ultimate-beneficiaries", "title": "H-HUMAN: 10 Billion Humans,\nthe Ultimate Beneficiaries"}, {"level": 3, "id": "a-agent-100-trillion-autonomous-intelligent-agents", "title": "A-AGENT: 100 Trillion\nAutonomous Intelligent Agents"}, {"level": 3, "id": "r-robot-100-trillion-robots", "title": "R-ROBOT: 100 Trillion\nRobots"}, {"level": 3, "id": "p-power-nuclear-fission-thin-film-solar", "title": "P-POWER: Nuclear Fission +\nThin-Film Solar"}, {"level": 3, "id": "perception-magic-s-space", "title": "Perception \u2192 MAGIC \u2190\nS-SPACE"}, {"level": 3, "id": "memory-safer-h-human-a-agent-r-robot", "title": "Memory \u2192 SAFER \u2190 H-HUMAN +\nA-AGENT + R-ROBOT"}, {"level": 3, "id": "cognition-turbo-p-power", "title": "Cognition \u2192 TURBO \u2190\nP-POWER"}], "4": [{"level": 2, "id": "in-depth-comparison-of-five-arvrmrerai-glasses-technology-routes", "title": "In-Depth Comparison of Five\nAR/VR/MR/ER/AI Glasses Technology Routes"}, {"level": 2, "id": "bci-brain-computer-interface-frontier", "title": "BCI (Brain-Computer Interface)\nFrontier"}, {"level": 2, "id": "d-gaussian-splatting-vs.-nerf", "title": "3D Gaussian Splatting\nvs.\u00a0NeRF"}, {"level": 2, "id": "spatial-anchoring-and-sharing", "title": "Spatial Anchoring and\nSharing"}, {"level": 2, "id": "national-policies-and-capital-markets", "title": "National Policies and Capital\nMarkets"}, {"level": 3, "id": "display-technology-the-ultimate-race-from-fast-lcd-to-micro-led", "title": "Display Technology: The\nUltimate Race from Fast-LCD to Micro-LED"}, {"level": 3, "id": "spatial-computing-chips-the-duel-between-r1-and-xr2-gen-2", "title": "Spatial Computing Chips: The\nDuel Between R1 and XR2+ Gen 2"}, {"level": 3, "id": "tracking-and-slam-the-nervous-system-of-spatial-computing", "title": "Tracking and SLAM: The\nNervous System of Spatial Computing"}, {"level": 3, "id": "non-invasive-bci-safe-but-weak-signals", "title": "Non-Invasive BCI: Safe but\nWeak Signals"}, {"level": 3, "id": "invasive-bci-high-precision-but-high-barrier", "title": "Invasive BCI: High Precision\nbut High Barrier"}, {"level": 3, "id": "semi-invasive-bci-balancing-safety-and-precision", "title": "Semi-Invasive BCI: Balancing\nSafety and Precision"}, {"level": 3, "id": "the-significance-of-bci-for-distributed-intelligence", "title": "The Significance of BCI for\nDistributed Intelligence"}, {"level": 3, "id": "nerf-the-pioneering-implicit-representation", "title": "NeRF: The Pioneering Implicit\nRepresentation"}, {"level": 3, "id": "d-gaussian-splatting-a-100-revolution-in-speed", "title": "3D Gaussian Splatting: A 100\u00d7\nRevolution in Speed"}, {"level": 3, "id": "rapid-penetration-from-laboratory-to-industry-standard", "title": "Rapid Penetration from\nLaboratory to Industry Standard"}], "5": [{"level": 3, "id": "from-rlhf-to-constitutional-ai-the-evolution-of-ai-alignment", "title": "From RLHF to Constitutional\nAI: The Evolution of AI Alignment"}, {"level": 3, "id": "privacy-preserving-computation-technology-stack", "title": "Privacy-Preserving\nComputation Technology Stack"}, {"level": 3, "id": "personal-ai-assistant-and-data-sovereignty", "title": "Personal AI Assistant and\nData Sovereignty"}, {"level": 3, "id": "on-device-llm-deployment-technology", "title": "On-Device LLM Deployment\nTechnology"}, {"level": 3, "id": "national-policies-and-capital-markets-1", "title": "National Policies and Capital\nMarkets"}], "6": [{"level": 2, "id": "function-calling-technical-principles", "title": "Function Calling Technical\nPrinciples"}, {"level": 2, "id": "react-and-the-reasoning-action-loop", "title": "ReAct and the Reasoning-Action\nLoop"}, {"level": 2, "id": "the-mcp-protocol-and-tool-standardization", "title": "The MCP Protocol and Tool\nStandardization"}, {"level": 2, "id": "permission-graded-security-technology", "title": "Permission-Graded Security\nTechnology"}, {"level": 2, "id": "national-policies-and-capital-markets-2", "title": "National Policies and Capital\nMarkets"}, {"level": 3, "id": "from-tool-invocation-to-standardization-of-function-calling", "title": "From Tool Invocation to\nStandardization of Function Calling"}, {"level": 3, "id": "comparison-of-three-major-platforms", "title": "Comparison of Three Major\nPlatforms"}, {"level": 3, "id": "the-alternation-of-reasoning-and-acting", "title": "The Alternation of Reasoning\nand Acting"}, {"level": 3, "id": "react-vs.-cot-vs.-tot", "title": "ReAct vs.\u00a0CoT vs.\u00a0ToT"}, {"level": 3, "id": "the-compounding-error-problem", "title": "The Compounding Error\nProblem"}, {"level": 3, "id": "model-context-protocol-architecture", "title": "Model Context Protocol\nArchitecture"}, {"level": 3, "id": "client-server-model-and-ecosystem-explosion", "title": "Client-Server Model and\nEcosystem Explosion"}, {"level": 3, "id": "the-complementary-landscape-of-mcp-and-a2a", "title": "The Complementary Landscape\nof MCP and A2A"}, {"level": 3, "id": "four-level-permission-model", "title": "Four-Level Permission\nModel"}, {"level": 3, "id": "sandbox-audit-and-monitoring", "title": "Sandbox, Audit, and\nMonitoring"}], "7": [{"level": 2, "id": "humanoid-robotics-technology-landscape", "title": "Humanoid Robotics Technology\nLandscape"}, {"level": 2, "id": "non-humanoid-robots", "title": "Non-Humanoid Robots"}, {"level": 2, "id": "vla-models-the-robots-cognitive-engine", "title": "VLA Models: The Robot\u2019s\n\u201cCognitive Engine\u201d"}, {"level": 2, "id": "robots-as-remote-proxies-for-humanity", "title": "Robots as Remote Proxies for\nHumanity"}, {"level": 2, "id": "national-policies-and-capital-markets-3", "title": "National Policies and Capital\nMarkets"}, {"level": 3, "id": "the-actuation-debate-hydraulic-exit-electric-dominance-tendon-driven-exploration", "title": "The Actuation Debate:\nHydraulic Exit, Electric Dominance, Tendon-Driven Exploration"}, {"level": 3, "id": "perception-systems-multi-modal-fusion-as-standard-configuration", "title": "Perception Systems:\nMulti-Modal Fusion as Standard Configuration"}, {"level": 3, "id": "core-parameter-panoramic-comparison", "title": "Core Parameter Panoramic\nComparison"}, {"level": 3, "id": "quadruped-robots-kings-of-terrain-adaptation", "title": "Quadruped Robots: Kings of\nTerrain Adaptation"}, {"level": 3, "id": "drones-from-aerial-photography-to-swarm-coordination", "title": "Drones: From Aerial\nPhotography to Swarm Coordination"}, {"level": 3, "id": "underwater-robots-tools-for-deep-sea-exploration", "title": "Underwater Robots: Tools for\nDeep-Sea Exploration"}, {"level": 3, "id": "evolution-timeline-from-rt-1-to-gr00t-n1", "title": "Evolution Timeline: From RT-1\nto GR00T N1"}, {"level": 3, "id": "sim-to-real-gap-the-gulf-from-simulation-to-reality", "title": "Sim-to-Real Gap: The Gulf\nfrom Simulation to Reality"}, {"level": 3, "id": "teleoperation-human-decision-making-robot-execution", "title": "Teleoperation: Human\nDecision-Making + Robot Execution"}, {"level": 3, "id": "human-robot-collaboration-a-new-paradigm-for-safe-coexistence", "title": "Human-Robot Collaboration: A\nNew Paradigm for Safe Coexistence"}], "8": [{"level": 2, "id": "chapter-introduction", "title": "Chapter Introduction"}, {"level": 2, "id": "ai-electricity-demand-exponential-growth", "title": "AI Electricity Demand\nExponential Growth"}, {"level": 2, "id": "data-center-cooling-technology", "title": "Data Center Cooling\nTechnology"}, {"level": 2, "id": "distributed-energy-and-sai", "title": "Distributed Energy and SAI"}, {"level": 2, "id": "national-policies-and-capital-markets-4", "title": "National Policies and Capital\nMarkets"}, {"level": 2, "id": "chapter-summary", "title": "Chapter Summary"}, {"level": 3, "id": "from-415-twh-to-945-twh-doubling-of-electricity-demand-in-five-years", "title": "From 415 TWh to 945 TWh:\nDoubling of Electricity Demand in Five Years"}, {"level": 3, "id": "training-vs.-inference-a-structural-shift-in-power-consumption", "title": "Training vs.\u00a0Inference: A\nStructural Shift in Power Consumption"}, {"level": 3, "id": "jevons-paradox-why-efficiency-gains-cannot-curb-demand-growth", "title": "Jevons Paradox: Why\nEfficiency Gains Cannot Curb Demand Growth"}, {"level": 3, "id": "regional-distribution-u.s.-dominance-china-catching-up-europe-under-pressure", "title": "Regional Distribution: U.S.\nDominance, China Catching Up, Europe Under Pressure"}, {"level": 3, "id": "cooling-the-invisible-consumer-of-data-center-energy", "title": "Cooling: The \u201cInvisible\nConsumer\u201d of Data Center Energy"}, {"level": 3, "id": "from-air-cooling-to-liquid-cooling-a-generational-leap-in-cooling-technology", "title": "From Air Cooling to Liquid\nCooling: A Generational Leap in Cooling Technology"}, {"level": 3, "id": "cooling-technology-parameter-panoramic-comparison", "title": "Cooling Technology Parameter\nPanoramic Comparison"}, {"level": 3, "id": "liquid-cooling-market-from-niche-to-mainstream", "title": "Liquid Cooling Market: From\nNiche to Mainstream"}, {"level": 3, "id": "the-hidden-cost-of-water-resources", "title": "The Hidden Cost of Water\nResources"}], "9": [{"level": 2, "id": "arvrmr-technology-in-depth", "title": "AR/VR/MR Technology in\nDepth"}, {"level": 2, "id": "brain-computer-interface-bci-frontier", "title": "Brain-Computer Interface (BCI)\nFrontier"}, {"level": 2, "id": "d-gaussian-splatting-and-nerf", "title": "3D Gaussian Splatting and\nNeRF"}, {"level": 2, "id": "spatial-anchoring-and-sharing-1", "title": "Spatial Anchoring and\nSharing"}, {"level": 2, "id": "generative-video-and-spatial-content", "title": "Generative Video and Spatial\nContent"}, {"level": 2, "id": "national-policies-and-capital-markets-5", "title": "National Policies and Capital\nMarkets"}, {"level": 3, "id": "five-pathway-technical-parameter-comparison", "title": "Five-Pathway Technical\nParameter Comparison"}, {"level": 3, "id": "display-technology-depth-comparison", "title": "Display Technology Depth\nComparison"}, {"level": 3, "id": "optical-solutions-and-tracking-technology", "title": "Optical Solutions and\nTracking Technology"}, {"level": 3, "id": "bci-technology-panoramic-classification", "title": "BCI Technology Panoramic\nClassification"}, {"level": 3, "id": "neuralink-in-depth-analysis", "title": "Neuralink In-Depth\nAnalysis"}, {"level": 3, "id": "immersive-remote-spatial-perception", "title": "Immersive Remote Spatial\nPerception"}, {"level": 3, "id": "bci-ethics-and-safety", "title": "BCI Ethics and Safety"}, {"level": 3, "id": "technical-principle-depth-comparison", "title": "Technical Principle Depth\nComparison"}, {"level": 3, "id": "application-scenarios-and-distributed-implications", "title": "Application Scenarios and\nDistributed Implications"}], "10": [{"level": 2, "id": "humanoid-robot-technology-landscape", "title": "Humanoid Robot Technology\nLandscape"}, {"level": 2, "id": "non-humanoid-robots-1", "title": "Non-Humanoid Robots"}, {"level": 2, "id": "vla-model-architecture-evolution", "title": "VLA Model Architecture\nEvolution"}, {"level": 2, "id": "robots-as-human-remote-agents", "title": "Robots as Human Remote\nAgents"}, {"level": 2, "id": "aerospace-the-ultimate-frontier", "title": "Aerospace: The Ultimate\nFrontier"}, {"level": 2, "id": "national-policies-and-capital-markets-6", "title": "National Policies and Capital\nMarkets"}, {"level": 2, "id": "chapter-summary-1", "title": "Chapter Summary"}, {"level": 3, "id": "global-major-humanoid-robot-parameter-comparison", "title": "Global Major Humanoid Robot\nParameter Comparison"}, {"level": 3, "id": "humanoid-robot-core-subsystems", "title": "Humanoid Robot Core\nSubsystems"}, {"level": 3, "id": "quadruped-robots-terrain-adaptation-specialists", "title": "Quadruped Robots: Terrain\nAdaptation Specialists"}, {"level": 3, "id": "drones-from-single-units-to-swarms", "title": "Drones: From Single Units to\nSwarms"}, {"level": 3, "id": "underwater-robots-eyes-on-the-deep-sea", "title": "Underwater Robots: Eyes on\nthe Deep Sea"}, {"level": 3, "id": "complete-vla-evolution-timeline", "title": "Complete VLA Evolution\nTimeline"}, {"level": 3, "id": "sim-to-real-transfer-technology", "title": "Sim-to-Real Transfer\nTechnology"}, {"level": 3, "id": "teleoperation-technology-stack", "title": "Teleoperation Technology\nStack"}], "11": [{"level": 2, "id": "open-source-model-frontier-moe-architecture-and-the-efficiency-revolution", "title": "Open-Source Model Frontier:\nMoE Architecture and the Efficiency Revolution"}, {"level": 2, "id": "closed-source-model-frontier-multimodal-breakthroughs-and-continued-validation-of-scaling-laws", "title": "Closed-Source Model Frontier:\nMultimodal Breakthroughs and Continued Validation of Scaling Laws"}, {"level": 2, "id": "voice-models-from-tts-to-zero-shot-voice-cloning", "title": "Voice Models: From TTS to\nZero-Shot Voice Cloning"}, {"level": 2, "id": "model-as-operating-system-model-as-os", "title": "Model as Operating System:\nModel-as-OS"}, {"level": 2, "id": "edge-deployment-technology-models-enter-ordinary-households", "title": "Edge Deployment Technology:\nModels Enter Ordinary Households"}, {"level": 2, "id": "full-ai-compute-stack-the-physical-foundation-from-chips-to-cooling", "title": "Full AI Compute Stack: The\nPhysical Foundation from Chips to Cooling"}, {"level": 2, "id": "national-policies-and-capital-markets-compute-is-national-power", "title": "National Policies and Capital\nMarkets: Compute Is National Power"}, {"level": 3, "id": "moe-architecture-trading-parameter-scale-for-computational-efficiency", "title": "MoE Architecture: Trading\nParameter Scale for Computational Efficiency"}, {"level": 3, "id": "llama-4-family-metas-open-source-flagship", "title": "Llama 4 Family: Meta\u2019s\nOpen-Source Flagship"}, {"level": 3, "id": "deepseek-r1-98-compression-of-reasoning-cost", "title": "DeepSeek R1: 98% Compression\nof Reasoning Cost"}, {"level": 3, "id": "qwen3-and-mistral-multilingual-and-european-forces", "title": "Qwen3 and Mistral:\nMultilingual and European Forces"}, {"level": 3, "id": "the-four-frontier-model-landscape", "title": "The Four Frontier Model\nLandscape"}, {"level": 3, "id": "multimodal-fusion-from-understanding-text-to-understanding-the-world", "title": "Multimodal Fusion: From\n\u201cUnderstanding Text\u201d to \u201cUnderstanding the World\u201d"}, {"level": 3, "id": "scaling-laws-and-the-data-wall-where-are-the-boundaries-of-growth", "title": "Scaling Laws and the Data\nWall: Where Are the Boundaries of Growth?"}, {"level": 3, "id": "tts-technology-evolution-three-generational-leaps", "title": "TTS Technology Evolution:\nThree Generational Leaps"}], "12": [{"level": 2, "id": "core-logic-of-the-bitcoin-whitepaper", "title": "Core Logic of the Bitcoin\nWhitepaper"}, {"level": 2, "id": "full-btc-ecosystem-technology-stack", "title": "Full BTC Ecosystem Technology\nStack"}, {"level": 2, "id": "layer-2-networks", "title": "Layer 2 Networks"}, {"level": 2, "id": "stablecoins-and-regulation", "title": "Stablecoins and\nRegulation"}, {"level": 2, "id": "rwa-tokenization", "title": "RWA Tokenization"}, {"level": 2, "id": "btc-etf", "title": "BTC ETF"}, {"level": 2, "id": "national-policies-and-capital-markets-7", "title": "National Policies and Capital\nMarkets"}, {"level": 3, "id": "asic-chip-generational-evolution", "title": "ASIC Chip Generational\nEvolution"}, {"level": 3, "id": "mining-farm-clean-energy-transition", "title": "Mining Farm Clean Energy\nTransition"}, {"level": 3, "id": "mining-pool-hashrate-concentration", "title": "Mining Pool Hashrate\nConcentration"}, {"level": 3, "id": "wallet-security-architecture", "title": "Wallet Security\nArchitecture"}, {"level": 3, "id": "cex-vs-dex-trading-paradigm-comparison", "title": "CEX vs DEX: Trading Paradigm\nComparison"}, {"level": 3, "id": "lightning-network-million-tps-payment-channels", "title": "Lightning Network:\nMillion-TPS Payment Channels"}, {"level": 3, "id": "taproot-assets", "title": "Taproot Assets"}, {"level": 3, "id": "rgb-protocol", "title": "RGB Protocol"}], "13": [{"level": 2, "id": "smr-technology-pathways-in-depth", "title": "SMR Technology Pathways in\nDepth"}, {"level": 2, "id": "molten-salt-energy-storage-technology-classification-key-focus", "title": "Molten Salt Energy Storage\nTechnology Classification (Key Focus)"}, {"level": 2, "id": "nuclear-fusion-frontier", "title": "Nuclear Fusion Frontier"}, {"level": 2, "id": "centralized-compute-center-technology-stack", "title": "Centralized Compute Center\nTechnology Stack"}, {"level": 2, "id": "national-policies-and-capital-markets-8", "title": "National Policies and Capital\nMarkets"}, {"level": 2, "id": "atomfuse.ais-nuclear-power-investment-philosophy", "title": "ATOMFUSE.AI\u2019s Nuclear Power\nInvestment Philosophy"}, {"level": 2, "id": "chapter-figure-index", "title": "Chapter Figure Index"}, {"level": 2, "id": "chapter-sources", "title": "Chapter Sources"}, {"level": 3, "id": "generation-iii-pwr-smr-mature-but-expensive", "title": "Generation III PWR-SMR:\nMature but Expensive"}, {"level": 3, "id": "generation-iv-htr-pm-the-worlds-first-grid-connected-gen-iv-reactor", "title": "Generation IV HTR-PM: The\nWorld\u2019s First Grid-Connected Gen-IV Reactor"}, {"level": 3, "id": "sodium-cooled-fast-reactor-terrapower-natriums-ambition", "title": "Sodium-Cooled Fast Reactor:\nTerraPower Natrium\u2019s Ambition"}, {"level": 3, "id": "thorium-molten-salt-reactor-tmsr-chinas-trump-card-key-focus", "title": "Thorium Molten Salt Reactor\nTMSR: China\u2019s Trump Card (Key Focus)"}, {"level": 3, "id": "four-major-molten-salt-energy-storage-systems", "title": "Four Major Molten Salt\nEnergy Storage Systems"}, {"level": 3, "id": "anti-corrosion-materials-the-achilles-heel-of-molten-salt-energy-storage", "title": "Anti-Corrosion Materials:\nThe Achilles\u2019 Heel of Molten Salt Energy Storage"}, {"level": 3, "id": "molten-salt-energy-storage-application-scenarios-in-ai-data-centers", "title": "Molten Salt Energy Storage\nApplication Scenarios in AI Data Centers"}], "14": [{"level": 2, "id": "photovoltaic-technology-in-depth-from-monocrystalline-silicon-to-the-tandem-limit", "title": "Photovoltaic Technology in\nDepth: From Monocrystalline Silicon to the Tandem Limit"}, {"level": 2, "id": "distributed-photovoltaics-from-rooftops-to-virtual-power-plants", "title": "Distributed Photovoltaics:\nFrom Rooftops to Virtual Power Plants"}, {"level": 2, "id": "space-based-solar-power-from-science-fiction-to-the-engineering-tipping-point-key-focus", "title": "Space-Based Solar Power: From\nScience Fiction to the Engineering Tipping Point (Key Focus)"}, {"level": 2, "id": "direct-dc-connected-compute-centers-the-800v-dc-architecture-efficiency-revolution", "title": "Direct DC-Connected Compute\nCenters: The 800V DC Architecture Efficiency Revolution"}, {"level": 2, "id": "electrochemical-energy-storage-the-time-porter-of-cognitive-energy-key-focus", "title": "Electrochemical Energy\nStorage: The \u201cTime Porter\u201d of Cognitive Energy (Key Focus)"}, {"level": 2, "id": "sst-solid-state-transformer-a-key-enabler-of-the-smart-grid", "title": "SST Solid-State Transformer: A\nKey Enabler of the Smart Grid"}, {"level": 2, "id": "flexible-photovoltaics-and-bipv-photovoltaics-as-building-material", "title": "Flexible Photovoltaics and\nBIPV: Photovoltaics as Building Material"}, {"level": 2, "id": "national-policies-and-capital-markets-the-geopolitical-economics-of-the-photovoltaic-industry", "title": "National Policies and Capital\nMarkets: The Geopolitical Economics of the Photovoltaic Industry"}, {"level": 3, "id": "crystalline-silicon-technology-pathways-the-mass-production-race-between-topcon-and-hjt", "title": "Crystalline Silicon\nTechnology Pathways: The Mass Production Race Between TOPCon and\nHJT"}, {"level": 3, "id": "perovskite-tandem-a-breakthrough-pathway-beyond-the-s-q-limit-key-focus", "title": "Perovskite Tandem: A\nBreakthrough Pathway Beyond the S-Q Limit (Key Focus)"}, {"level": 3, "id": "thin-film-cells-the-niche-markets-of-cdte-and-cigs", "title": "Thin-Film Cells: The Niche\nMarkets of CdTe and CIGS"}, {"level": 3, "id": "rooftop-and-balcony-solar-the-scaling-effects-of-micro-power-units", "title": "Rooftop and Balcony Solar:\nThe Scaling Effects of Micro-Power Units"}, {"level": 3, "id": "community-vpp-the-aggregation-economics-of-distributed-energy", "title": "Community VPP: The\nAggregation Economics of Distributed Energy"}, {"level": 3, "id": "sbsp-principles-the-physical-foundation-of-space-solar-power", "title": "SBSP Principles: The\nPhysical Foundation of Space Solar Power"}, {"level": 3, "id": "leo-vs.-geo-technical-economic-trade-offs-between-two-orbits", "title": "LEO vs.\u00a0GEO:\nTechnical-Economic Trade-offs Between Two Orbits"}], "15": [{"level": 2, "id": "chapter-15-safer-distributed-memory-system", "title": "Chapter 15 SAFER \u2014 Distributed\nMemory System"}, {"level": 3, "id": "the-neuroscientific-foundations-of-memory", "title": "The Neuroscientific\nFoundations of Memory"}, {"level": 3, "id": "five-modules-five-memory-subsystem-mapping", "title": "Five Modules \u2192 Five Memory\nSubsystem Mapping"}, {"level": 3, "id": "five-module-technical-architecture-in-detail", "title": "Five-Module Technical\nArchitecture in Detail"}, {"level": 3, "id": "three-layer-technical-architecture", "title": "Three-Layer Technical\nArchitecture"}, {"level": 3, "id": "security-design", "title": "Security Design"}, {"level": 3, "id": "product-positioning-my-safer-ai", "title": "Product Positioning: My\nSafer AI"}], "16": [{"level": 2, "id": "chapter-16-magic-the-distributed-perception-system", "title": "Chapter 16: MAGIC \u2014 The\nDistributed Perception System"}, {"level": 3, "id": "the-neuroscientific-foundations-of-perception", "title": "The Neuroscientific\nFoundations of Perception"}, {"level": 3, "id": "five-modules-five-perceptual-function-mappings", "title": "Five Modules \u2192 Five\nPerceptual Function Mappings"}, {"level": 3, "id": "detailed-technical-architecture-of-the-five-modules", "title": "Detailed Technical\nArchitecture of the Five Modules"}, {"level": 3, "id": "perception-layer-technology-integration-roadmap", "title": "Perception Layer Technology\nIntegration Roadmap"}, {"level": 3, "id": "product-positioning-and-technology-roadmap", "title": "Product Positioning and\nTechnology Roadmap"}], "17": [{"level": 2, "id": "the-neuroscientific-foundations-of-cognition", "title": "The Neuroscientific\nFoundations of Cognition"}, {"level": 2, "id": "five-modules-five-cognitive-function-mappings", "title": "Five Modules \u2192 Five Cognitive\nFunction Mappings"}, {"level": 2, "id": "detailed-technical-architecture-of-the-five-modules-1", "title": "Detailed Technical\nArchitecture of the Five Modules"}, {"level": 2, "id": "dual-path-energy-supply-architecture", "title": "Dual-Path Energy Supply\nArchitecture"}, {"level": 2, "id": "economic-analysis", "title": "Economic Analysis"}, {"level": 2, "id": "chapter-summary-2", "title": "Chapter Summary"}, {"level": 3, "id": "prefrontal-cortex-and-executive-function", "title": "Prefrontal Cortex and\nExecutive Function"}, {"level": 3, "id": "dmn-tpn-antagonism-the-switching-between-focus-and-introspection", "title": "DMN-TPN Antagonism: The\nSwitching Between Focus and Introspection"}, {"level": 3, "id": "brain-energy-economics-2-body-weight-20-energy-consumption", "title": "Brain Energy Economics: 2%\nBody Weight, 20% Energy Consumption"}, {"level": 3, "id": "t-tpu-information-processing-acceleration", "title": "T-TPU: Information\nProcessing Acceleration"}, {"level": 3, "id": "u-ups-continuity-assurance", "title": "U-UPS: Continuity\nAssurance"}, {"level": 3, "id": "r-reasoning-reasoning-and-planning", "title": "R-Reasoning: Reasoning and\nPlanning"}, {"level": 3, "id": "b-bess-energy-metabolism-management", "title": "B-BESS: Energy Metabolism\nManagement"}, {"level": 3, "id": "o-os-control-architecture", "title": "O-OS: Control\nArchitecture"}, {"level": 3, "id": "path-a-centralized-nuclear-energy", "title": "Path A: Centralized Nuclear\nEnergy"}], "18": [{"level": 2, "id": "chapter-18-\u03c3sai-agi_rogue-complete-architecture-and-outlook", "title": "Chapter 18: \u03a3SAI &gt;\nAGI_rogue \u2014 Complete Architecture and Outlook"}, {"level": 3, "id": "four-layer-complete-architecture-correspondence-table", "title": "Four-Layer Complete\nArchitecture Correspondence Table"}, {"level": 3, "id": "three-pillar-technology-maturity-assessment", "title": "Three-Pillar Technology\nMaturity Assessment"}, {"level": 3, "id": "\u03c3sai-agi_rogue-the-triple-argument", "title": "\u03a3SAI &gt; AGI_rogue: The\nTriple Argument"}, {"level": 3, "id": "unique-risks-of-distributed-sa-and-mitigation", "title": "Unique Risks of Distributed\nSA and Mitigation"}, {"level": 3, "id": "key-risk-factors", "title": "Key Risk Factors"}, {"level": 3, "id": "technology-evolution-roadmap", "title": "2025\u20132035 Technology\nEvolution Roadmap"}, {"level": 3, "id": "from-satoshi-to-sharp-moment-the-unbroken-line-of-decentralization-spirit", "title": "From Satoshi to SHARP\nMOMENT: The Unbroken Line of Decentralization Spirit"}, {"level": 3, "id": "exchange-token-as-the-trust-layer-for-collective-sa", "title": "Exchange Token as the Trust\nLayer for Collective SA"}], "19": [{"level": 2, "id": "appendix-a-core-glossary", "title": "Appendix A: Core Glossary"}], "20": [{"level": 2, "id": "appendix-b-sharp-five-dimensions-moment-six-matrices-complete-mapping-table", "title": "Appendix B: SHARP Five\nDimensions \u00d7 MOMENT Six Matrices Complete Mapping Table"}], "21": [{"level": 2, "id": "appendix-c-three-pillar-neuroscience-mapping-table", "title": "Appendix C: Three-Pillar\nNeuroscience Mapping Table"}], "22": [{"level": 2, "id": "appendix-d-2025-2035-technology-evolution-roadmap", "title": "Appendix D: 2025-2035\nTechnology Evolution Roadmap"}], "23": [{"level": 2, "id": "appendix-e-full-legal-disclaimer", "title": "Appendix E: Full Legal\nDisclaimer"}], "24": [{"level": 2, "id": "appendix-f-academic-honesty-statement", "title": "Appendix F: Academic Honesty\nStatement"}]};
-
-let current=0,fontSize=0,expandedChapters=new Set();
-
-function init(){buildSidebar();showChapter(0);const s=localStorage.getItem('sharp-theme');if(s){document.body.setAttribute('data-theme',s);updateRmActive(s)}document.addEventListener('keydown',e=>{if(e.target.tagName==='INPUT')return;if(e.key==='ArrowLeft'||e.key==='p'||e.key==='P')goPrev();if(e.key==='ArrowRight'||e.key==='n'||e.key==='N')goNext()});document.addEventListener('click',e=>{const m=document.getElementById('read-modal'),b=document.querySelector('#float-controls button');if(!m.contains(e.target)&&e.target!==b&&!b.contains(e.target))m.classList.remove('show')})}
-
-function buildSidebar(){const nav=document.getElementById('sidebar-nav');let html='';let cp='';const pl={I:'Part I: Urgency & Framework',II:'Part II: Infrastructure',III:'Part III: Application Technology',IV:'Part IV: Three-Pillar Products',V:'Part V: Conclusions',App:'Appendices'};CHAPTERS.forEach((ch,i)=>{if(ch.part&&ch.part!==cp){cp=ch.part;html+='<div class="part-label">'+(pl[cp]||cp)+'</div>'}const subs=SUBSECTIONS[String(i)]||[];const hasSubs=subs.length>0;const isExpanded=expandedChapters.has(i);html+='<div class="nav-chapter" style="margin-bottom:2px;">';html+='<div class="nav-item'+(i===0?' active':'')+'" data-idx="'+i+'" onclick="showChapter('+i+')">';html+='<span class="nav-num">'+(ch.num||'Cv')+'</span>';html+='<span class="nav-title">'+ch.title+'</span>';if(hasSubs){html+='<span class="nav-expand" onclick="event.stopPropagation();toggleExpand('+i+')">'+(isExpanded?'&#9662;':'&#9656;')+'</span>'}html+='</div>';if(hasSubs&&isExpanded){html+='<div class="nav-subs">';subs.forEach(sub=>{const pad=sub.level===3?'padding-left:32px;':'padding-left:24px;';const fs=sub.level===3?'font-size:11px;color:var(--text3);':'font-size:12px;color:var(--text2);';html+='<a href="#'+sub.id+'" onclick="goToSub('+i+',''+sub.id+'');return false;" style="display:block;padding:3px 0 3px 24px;'+pad+fs+'text-decoration:none;transition:color 0.15s;" onmouseenter="this.style.color='var(--text)'" onmouseleave="this.style.color=''+(sub.level===3?'var(--text3)':'var(--text2)')+''">'+sub.title+'</a>'});html+='</div>'}html+='</div>'});nav.innerHTML=html}
-
-function toggleExpand(idx){if(expandedChapters.has(idx)){expandedChapters.delete(idx)}else{expandedChapters.add(idx)}buildSidebar();const el=document.querySelector('.nav-item[data-idx="'+idx+'"]');if(el)el.scrollIntoView({block:'nearest'})}
-
-function goToSub(chIdx,subId){showChapter(chIdx);setTimeout(()=>{const el=document.getElementById(subId);if(el)el.scrollIntoView({behavior:'smooth',block:'start'})},100);return false}
-
-function showChapter(idx){idx=Math.max(0,Math.min(CHAPTERS.length-1,idx));current=idx;document.querySelectorAll('.chapter').forEach((el,i)=>el.classList.toggle('active',i===idx));document.querySelector('.content-wrap').scrollTop=0;window.scrollTo(0,0);document.querySelectorAll('.nav-item').forEach((el,i)=>el.classList.toggle('active',i===idx));const ch=CHAPTERS[idx];document.getElementById('topbar-title').textContent=ch.num?'Ch '+ch.num:'Cover';document.getElementById('topbar-chapter').textContent=ch.title.length>40?ch.title.substring(0,40)+'...':ch.title;document.getElementById('btn-prev').disabled=idx===0;document.getElementById('btn-next').disabled=idx===CHAPTERS.length-1;document.getElementById('progress-text').textContent=(idx+1)+' / '+CHAPTERS.length;document.getElementById('progress-fill').style.width=((idx+1)/CHAPTERS.length*100)+'%';history.replaceState(null,null,'#'+ch.id);if(window.innerWidth<769){document.getElementById('sidebar').classList.remove('open');document.getElementById('overlay').classList.remove('show')}}
-
-function goPrev(){if(current>0)showChapter(current-1)}function goNext(){if(current<CHAPTERS.length-1)showChapter(current+1)}function toggleSidebar(){const sb=document.getElementById('sidebar'),ov=document.getElementById('overlay');if(window.innerWidth<769){sb.classList.toggle('open');ov.classList.toggle('show')}else{sb.classList.toggle('collapsed');document.getElementById('main-wrap').classList.toggle('expanded');document.getElementById('bottombar').classList.toggle('expanded')}}function toggleReadModal(){document.getElementById('read-modal').classList.toggle('show')}function setTheme(theme,btn){document.body.setAttribute('data-theme',theme);localStorage.setItem('sharp-theme',theme);if(btn)updateRmActive(theme)}function updateRmActive(theme){document.querySelectorAll('.rm-btns:first-child .rm-btn').forEach(b=>b.classList.remove('active'));const map={light:0,dark:1,sepia:2};const btns=document.querySelectorAll('.rm-btns:first-child .rm-btn');if(btns[map[theme]])btns[map[theme]].classList.add('active')}function changeFont(d){fontSize=Math.max(-2,Math.min(2,fontSize+d));const s={'-2':'14px','-1':'15px','0':'17px','1':'19px','2':'21px'};document.querySelector('.content-wrap').style.fontSize=s[fontSize]}document.addEventListener('DOMContentLoaded',()=>{init();const h=location.hash.replace('#','');if(h){const i=CHAPTERS.findIndex(c=>c.id===h);if(i>=0)showChapter(i)}});
+let current=0;
+function showCh(idx){
+  idx=Math.max(0,Math.min(25,idx));
+  current=idx;
+  document.querySelectorAll('.chapter').forEach((el,i)=>el.classList.toggle('active',i===idx));
+  document.querySelectorAll('.nav-link').forEach((el,i)=>el.classList.toggle('active',i===idx));
+  window.scrollTo(0,0);
+  history.replaceState(null,null,'#'+['cover','ch1','ch2','ch3','ch4','ch5','ch6','ch7','ch8','ch9','ch10','ch11','ch12','ch13','ch14','ch15','ch16','ch17','ch18','appa','appb','appc','appd','appe','appf','appg'][idx]);
+  return false;
+}
+document.addEventListener('DOMContentLoaded',()=>{
+  const h=location.hash;
+  const map={'#cover':0,'#ch1':1,'#ch2':2,'#ch3':3,'#ch4':4,'#ch5':5,'#ch6':6,'#ch7':7,'#ch8':8,'#ch9':9,'#ch10':10,'#ch11':11,'#ch12':12,'#ch13':13,'#ch14':14,'#ch15':15,'#ch16':16,'#ch17':17,'#ch18':18,'#appa':19,'#appb':20,'#appc':21,'#appd':22,'#appe':23,'#appf':24,'#appg':25};
+  if(h in map) showCh(map[h]);
+});
+</script>
 </body>
 </html>
